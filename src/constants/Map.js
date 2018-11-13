@@ -1,10 +1,11 @@
 module.exports = {
-  DEFAULT_ZOOM: 7,
+  DEFAULT_ZOOM: 12,
   CITY_DEFAULT_ZOOM: 13,
   ENTRY_DEFAULT_ZOOM: 15,
   DEFAULT_CENTER: {
-    lat: 50.826,
-    lng: 10.920
+    lat: 48.146,
+    lng: 11.583
+
   },
   DEFAULT_BBOX: {
     _northEast: {
