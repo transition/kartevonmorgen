@@ -29,7 +29,17 @@ const Actions = {
 
   toggleMenu          : () => ({ type: T.TOGGLE_MENU }),
   showMenu            : () => ({ type: T.SHOW_MENU }),
-  showNewEntry        : () => ({ type: T.SHOW_NEW_ENTRY }),
+
+  showNewEntry: () =>
+    (dispatch) => {
+      dispatch(Actions.setSearchText(''));
+      dispatch(serverActions.Actions.search());
+      dispatch({
+        type: T.SHOW_NEW_ENTRY
+      });
+      
+    },
+
   showSearchResults   : () => ({ type: T.SHOW_SEARCH_RESULTS }),
   toggleLandingPage   : () => ({ type: T.TOGGLE_MENU }),
   showImprint         : () => ({ type: T.SHOW_IMPRINT }),
@@ -40,6 +50,13 @@ const Actions = {
   cancelWait          : () => ({ type: T.CANCEL_WAIT_IO }),
   showLeftPanel       : () => ({ type: T.SHOW_LEFT_PANEL }),
   hideLeftPanel       : () => ({ type: T.HIDE_LEFT_PANEL }),
+
+  hideLeftPanelOnMobile: () =>
+    (dispatch) => {
+      if (document.documentElement.clientWidth < 600) {
+        dispatch(Actions.hideLeftPanel())
+      }
+    },
 
   showAllEntries: () =>
     (dispatch, getState) => {

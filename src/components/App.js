@@ -23,8 +23,10 @@ import NotificationsSystem  from "reapop";
 import theme                from "reapop-theme-wybo";
 import "./styling/Icons"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled,{ keyframes } from "styled-components";
+import styled, { keyframes, createGlobalStyle } from "styled-components";
 import STYLE                from "./styling/Variables"
+import Swipeable from 'react-swipeable'
+
 
 class Main extends Component {
   
@@ -53,6 +55,15 @@ class Main extends Component {
     document.removeEventListener("keydown");
   }
 
+  swipedLeftOnPanel() {
+    this.props.dispatch(Actions.hideLeftPanel())
+  }
+
+  swipedRightOnMap(e, deltaX) {
+    if( e.nativeEvent === undefined || e.nativeEvent.changedTouches === undefined) return true
+    if(e.nativeEvent.changedTouches[0].pageX + deltaX < 26 ) this.props.dispatch(Actions.showLeftPanel())
+  }
+
   render(){
     const { dispatch, search, view, server, map, form, url, user, timedActions, t } = this.props;
     const { addresses } = search;
@@ -70,6 +81,7 @@ class Main extends Component {
     
     return (
       <StyledApp className="app">
+        <GlobalStyle />
         <MainWrapper className="main">
           <NotificationsSystem theme={theme}/>
           { 
@@ -139,52 +151,54 @@ class Main extends Component {
             view.modal != null ? <Modal view={view} dispatch={dispatch} /> : ""
           }
 
-          <LeftPanel className={"left " + (view.showLeftPanel && !view.menu ? 'opened' : 'closed')}>
-            <div className={"search " + ((view.left === V.RESULT) ? 'open' : 'closed')}>
-              <SearchBar
-                searchText={search.text}
-                categories={search.categories}
-                type="integrated"
-                disabled={view.left === V.EDIT || view.left === V.NEW}
-                toggleCat={ c => {
-                  if (c === C.IDS.EVENT) {
-                    return dispatch(Actions.showFeatureToDonate("events"));
-                  } else {
-                    dispatch(Actions.toggleSearchCategory(c));
+          <Swipeable onSwipedLeft={ () => this.swipedLeftOnPanel() }>
+            <LeftPanel className={"left " + (view.showLeftPanel && !view.menu ? 'opened' : 'closed')}>
+              <div className={"search " + ((view.left === V.RESULT) ? 'open' : 'closed')}>
+                <SearchBar
+                  searchText={search.text}
+                  categories={search.categories}
+                  type="integrated"
+                  disabled={view.left === V.EDIT || view.left === V.NEW}
+                  toggleCat={ c => {
+                    if (c === C.IDS.EVENT) {
+                      return dispatch(Actions.showFeatureToDonate("events"));
+                    } else {
+                      dispatch(Actions.toggleSearchCategory(c));
+                      return dispatch(Actions.search());
+                    }
+                  }}
+                  onChange={txt => {
+                    if (txt == null) {
+                      txt = "";
+                    }
+                    dispatch(Actions.setSearchText(txt));
                     return dispatch(Actions.search());
-                  }
-                }}
-                onChange={txt => {
-                  if (txt == null) {
-                    txt = "";
-                  }
-                  dispatch(Actions.setSearchText(txt));
-                  return dispatch(Actions.search());
-                }}
-                onEscape={ () => {
-                  return dispatch(Actions.setSearchText(''));
-                }}
-                onEnter={ () => {}}      // currently not used, TODO
-                loading={ server.loadingSearch }
-              />
-            </div>
+                  }}
+                  onEscape={ () => {
+                    return dispatch(Actions.setSearchText(''));
+                  }}
+                  onEnter={ () => {}}      // currently not used, TODO
+                  loading={ server.loadingSearch }
+                />
+              </div>
 
-            <div className="content-wrapper">
-              <Sidebar
-                view={ view }
-                search={ search }
-                map={ map }
-                user={ user }
-                form={ form }
-                entries={entries}
-                resultEntries={ resultEntries }
-                ratings={ ratings }
-                LeftPanelentries={ server.entries }
-                dispatch={ dispatch }
-                t={ t }
-              />
-            </div>
-          </LeftPanel>
+              <div className="content-wrapper">
+                <Sidebar
+                  view={ view }
+                  search={ search }
+                  map={ map }
+                  user={ user }
+                  form={ form }
+                  entries={entries}
+                  resultEntries={ resultEntries }
+                  ratings={ ratings }
+                  // LeftPanelentries={ server.entries } never used…?
+                  dispatch={ dispatch }
+                  t={ t }
+                />
+              </div>
+            </LeftPanel>
+          </Swipeable>
 
           <HiddenSidebar>
             <button
@@ -209,7 +223,7 @@ class Main extends Component {
             </div>
           </RightPanel> 
 
-          <div className="center">
+          <Swipeable onSwipedRight={ (e, deltaX) => this.swipedRightOnMap(e, deltaX) } className="center">
             <Map
               marker={ (view.left === V.EDIT || view.left === V.NEW) ? map.marker : null}
               highlight={ search.highlight }
@@ -218,10 +232,18 @@ class Main extends Component {
               category={ form[EDIT.id] ? form[EDIT.id].category ? form[EDIT.id].category.value : null : null}
               entries={ resultEntries}
               ratings={ ratings}
-              onClick={ latlng => {
-                return dispatch(Actions.setMarker(latlng));
+              onClick={ (event) => {
+                if(event.originalEvent.srcElement.tagName.toLowerCase() === 'path') return false;
+                
+                //back to overview
+                dispatch(Actions.setCurrentEntry(null, null));
+                dispatch(Actions.showSearchResults());
+                dispatch(Actions.setCenterInUrl(mapCenter));
+
+                dispatch(Actions.hideLeftPanelOnMobile());
+                return dispatch(Actions.setMarker(event.latlng));
               }}
-              onMarkerClick={ id => { 
+              onMarkerClick={ id => {
                 dispatch(Actions.setCurrentEntry(id, null)); 
                 return dispatch(Actions.showLeftPanel()); 
               }}
@@ -230,7 +252,7 @@ class Main extends Component {
               onLocate={ () => { return dispatch(Actions.showOwnPosition()); }}
               showLocateButton={ true }
             />
-          </div>
+          </Swipeable>
         </MainWrapper>
       </StyledApp>
     );  
@@ -250,10 +272,24 @@ Main.propTypes = {
 
 module.exports = translate('translation')(pure(Main))
 
-
-
-
 /* Moved all styles here. TODO: Move to right components */
+
+
+const GlobalStyle = createGlobalStyle`
+  
+  @media only screen and (max-width: 600px) {
+    body { font-size:80%;}
+  }
+
+  h1, h2, h3, h4, h5, h6, h7 {
+    font-family: ${STYLE.headerFont};
+    font-weight: 500;
+  }
+  
+  html, button, input, select, textarea {
+    font-family: ${STYLE.bodyFont};
+  }
+`;
 
 
 // Create the keyframes
@@ -306,8 +342,10 @@ const LeftPanel = styled.div `
       height: 100vh;
       width: 100%;
       box-sizing: border-box;
-      padding-bottom: 30px;
+      padding-bottom: 1rem;
       position: absolute;
+      display: flex;
+      flex-direction: column;
     }
   }
   &.closed {
@@ -441,24 +479,7 @@ const StyledApp = styled.div `
   .tutorial {
     margin-bottom: 3em;
     img { width: 100%; }
-  }
-
-  /* TYPO */ 
-  @media only screen and(max-width: 600px) {
-    body {
-      font-size: 80%;
-    }
-  }
-
-  input, select, textarea, button {
-    font-family: ${STYLE.bodyFont};
-  }
-
-  h1, h2, h3, h4, h5, h6, h7 {
-    font-family: ${STYLE.headerFont};
-    font-weight: 500;
-    margin-block-end: 0;
-  }
+  
 
   button {
     font-family: ${STYLE.bodyFont};
@@ -609,3 +630,4 @@ const StyledApp = styled.div `
     margin-top: 0.7em;
   }
 `
+

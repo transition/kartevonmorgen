@@ -17,6 +17,9 @@
 		"title":"Title",
 		"description":"Description",
 		"tags":"Tags (separate by comma)",
+		"newTag":"New:",
+		"noTagSuggestion":"Type for sugestions.",
+		"tagsLoading":"Loading suggestions…",
 		"homepage":"Homepage",
 		"phone":"Phone",
 		"street":"Address",
@@ -58,7 +61,13 @@
 	"entryDetails":{
 		"loadingEntry": "loading entry...",
 		"back" : "back",
-		"homepagePlaceholder": "Website"
+		"homepagePlaceholder": "Website",
+		"reportLink": "Report this Entry",
+		"reportSubject": "Report Entry",
+		"reportBody": "This entry {link} is problematic because:",
+		"lastEdit": "last edit",
+		"today": "today",
+		"daysAgo": "days ago"
 	},
 	"login":{
 		"requiredField":"required field",

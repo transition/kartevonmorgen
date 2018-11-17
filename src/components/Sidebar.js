@@ -1,4 +1,6 @@
 import React, { Component } from "react"
+import { translate } from "react-i18next";
+import { pure } from "recompose";
 import V                    from "../constants/PanelView"
 import PropTypes            from "prop-types"
 import ResultList           from "./ResultList"
@@ -15,17 +17,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import STYLE                from "./styling/Variables"
 import styled               from "styled-components";
 
-
 class Sidebar extends Component {
 
   entryContent = null;
+
+  shouldComponentUpdate(nextProps) {
+    if (!nextProps.view.showLeftPanel) return false
+    if (!this.props.view.showLeftPanel && nextProps.view.showLeftPanel) return true
+    if (nextProps.view.left !== this.props.view.left) return true
+    if( nextProps.view.left === this.props.view.left === V.ENTRY && nextProps.search.highlight === this.props.search.highlight ) return false
+    if( nextProps.view.left === V.RESULT
+        && Object.keys(nextProps.resultEntries).join() === Object.keys(this.props.resultEntries).join()
+        && Object.keys(nextProps.search.invisible).join() === Object.keys(this.props.search.invisible).join()
+        && Object.keys(nextProps.ratings).join() === Object.keys(this.props.ratings).join()
+    ) return false
+    return true
+  }
+
+  componentDidUpdate(prevProps){
+    if( this.props.view.left === V.ENTRY && prevProps.search.highlight !== this.props.search.highlight) this.scrollToTop()
+  }
 
   setEntryContentRef = (elem) => {
     this.entryContent = elem;
   };
 
   scrollToTop = () =>{
-    if(this.entryContent) this.entryContent.scrollTo(0,0)
+    if(this.entryContent){
+      this.entryContent.scrollTop = 0;
+      this.entryContent.scrollLeft = 0;
+    } 
   }
 
   render(){
@@ -34,6 +55,8 @@ class Sidebar extends Component {
     const { waiting_for_search_results } = view;
     const { explainRatingContext, selectedContext } = view;
     const invisibleEntries = search.invisible.filter(e => entries[e.id]).map(e => entries[e.id]);
+
+    const entry = entries[search.current] || null;
 
     var content;
     switch (view.left) {
@@ -94,20 +117,25 @@ class Sidebar extends Component {
         break;
 
       case V.ENTRY:
-        this.scrollToTop()
-        content = (
+        if(!entry) content = ''
+        else content = (
           <div className="content" ref={this.setEntryContentRef}>
             <EntryDetails
-              entry={ entries[search.current] || null }
+              entry={ entry }
               dispatch={ dispatch }
               mapCenter={ map.center }
             />
             <Ratings
-              entry={ entries[search.current] || null}
-              ratings={ (entries[search.current] ? entries[search.current].ratings || [] : []).map(id => {
+              entry={ entry }
+              ratings={ (entry ? entry.ratings || [] : []).map(id => {
                 return ratings[id];
               })}
               onRate={ id => { return dispatch(Actions.showNewRating(id)); }}
+            />
+            <MetaFooter 
+              changed = {entry.created} 
+              version = {entry.version}
+              title = {entry.title}
             />
           </div>
         );
@@ -225,6 +253,47 @@ class Sidebar extends Component {
     return(content);
   }
 }
+
+
+
+
+
+const Footer = (props) => {
+  const now = Date.now()
+  const edited = new Date(props.changed*1000)
+  const diffDate = Math.round((now-edited)/(1000*60*60*24))
+  const fullDate = edited.toLocaleString()
+  const fullDateString = props.t("entryDetails.lastEdit") + " " + ((diffDate < 1) ? props.t("entryDetails.today") : diffDate + " " + props.t("entryDetails.daysAgo") )
+
+  const subject = props.t("entryDetails.reportSubject")
+  const body = "%0D%0A"+ props.t("entryDetails.reportBody").replace("{link}", (" «"+props.title + "»%0D%0A (" + encodeURIComponent(window.location.href) + ")%0D%0A ")) + '%0D%0A%0D%0A'
+  const mailToString = `mailto:report@kartevonmorgen.org?subject=${subject}&body=${body}`
+
+  return(
+    <MetaFoot>
+      <a href={mailToString}><b>{props.t("entryDetails.reportLink")}</b></a>
+      <span><a title={fullDate}>{fullDateString} // rev{props.version}</a></span>
+    </MetaFoot>
+  )
+}
+
+const MetaFooter = translate('translation')(pure(Footer))
+
+const MetaFoot = styled.div`
+  text-align: left;
+  color: #aaa;
+  line-height: 1.5;
+  font-size: 0.7rem;
+  margin-top: auto;
+  margin-bottom: -1rem;
+  padding: 1rem 1.8em;
+  background-color: #f9f9f9;
+  border-top: 1px solid ${STYLE.lightGray};
+
+  > a:link {color: #000; }
+  >span { float: right; }
+`
+
 
 Sidebar.propTypes = {
   view:           PropTypes.object.isRequired,

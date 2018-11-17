@@ -96,8 +96,8 @@ class Flower extends Component {
     
     const leafs = [0, 1, 2, 3, 4, 5].map((i) => {
     
-      const tooltip = this.getTooltip(this.factorList[i]);
-
+      const tooltip = this.props.showTooltip ? this.getTooltip(this.factorList[i]) : ''
+      
       return(
         <Leaf 
           key = {i}
@@ -126,7 +126,8 @@ class Flower extends Component {
 
 Flower.propTypes = {
   ratings:  T.array,
-  radius:   T.number
+  radius:   T.number,
+  showTooltip: T.bool
 }
 
 module.exports = Flower
@@ -153,7 +154,6 @@ const KVTooltip = styled(Tooltip)`
   }
   
   > h3{
-    font-family: sans-serif;
     margin: .5rem 0 -.5rem 0;
     padding: 0;
     font-size: .9rem;

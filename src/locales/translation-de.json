@@ -17,6 +17,9 @@
 		"title":"Titel",
 		"description":"Beschreibung",
 		"tags":"Stichworte (Komma-getrennt)",
+		"newTag":"Neu:",
+		"noTagSuggestion":"Tippen für Vorschläge.",
+		"tagsLoading":"Vorschläge werden geladen…",
 		"homepage":"Homepage",
 		"phone":"Telefon",
 		"street":"Straße & Hausnummer",
@@ -58,7 +61,13 @@
 	"entryDetails":{
 		"loadingEntry": "Eintrag wird geladen...",
 		"back" : "zurück",
-		"homepagePlaceholder": "Homepage"
+		"homepagePlaceholder": "Homepage",
+		"reportLink": "Diesen Eintrag Melden",
+		"reportSubject": "Eintrag Melden",
+		"reportBody": "Mit dem Eintrag {link} gibt es folgendes Problem:",
+		"lastEdit": "letzte änderung:",
+		"today": "heute",
+		"daysAgo": "tage her"
 	},
 	"login":{
 		"requiredField":"Pflichtangabe",
