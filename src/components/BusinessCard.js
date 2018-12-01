@@ -9,6 +9,7 @@ import Actions from "../Actions";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ROUTEPLANNERS } from "../constants/URLs.js"
 import { NAMES } from "../constants/Categories"
+import Tag from "./Tags/Tag"
 
 const Tags = (tags=[], dispatch) =>
   <TagsWrapper key="tags">
@@ -16,13 +17,15 @@ const Tags = (tags=[], dispatch) =>
     { tags
         .filter(t => t != "")
         .map( (t,index) =>
-          <Tag key={"Tag"+t}><TagLink
+          <TagListElem key={"Tag"+t}><Tag
+            clickable={ true }
             onClick={ () => {
               dispatch(Actions.showSearchResults());
               dispatch(Actions.setSearchText('#'+t));
               return dispatch(Actions.search());
             }}
-          >#{t}</TagLink></Tag>
+            text = {t}
+          /></TagListElem>
         )}
     </TagList>
   </TagsWrapper>
@@ -203,25 +206,6 @@ const TagList = styled.ul `
   margin: 0;
 `;
 
-const Tag = styled.li `
+const TagListElem = styled.li `
   display: inline;
 `;
-
-const TagLink = styled.a `
-  color: #333;
-  text-decoration: none;
-  display: inline-block;
-  background: #eaeaea;
-  border-radius: 0.3em;
-  padding: .2em .4em;
-  font-size: 0.75em;
-  margin-bottom: 0.2rem;
-  margin-right: 0.4em;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-
-  &:hover {
-    color: #fff;
-    background-color: #333;
-  }
-`

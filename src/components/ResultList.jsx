@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import STYLE from "./styling/Variables"
 import styled from "styled-components";
-
+import Tag from "./Tags/Tag"
 
 const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, onMouseLeave, t}) => {
   var css_class = highlight ? 'highlight-entry ' : '';
@@ -43,7 +43,7 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
             entry.tags ? (entry.tags.length > 0)
               ? <TagsWrapper>
                 <ul >
-                  { entry.tags.slice(0, 5).map(t => <Tag key={t}>#{t}</Tag>) }
+                  { entry.tags.slice(0, 5).map(t => <Tag key={"Tag"+t} clickable={ false } text = {t} /> ) }
                 </ul>
               </TagsWrapper>
               : null
@@ -246,17 +246,11 @@ const TagsWrapper = styled.div `
   }
 `
 
-const Tag = styled.div `
-  font-size: 0.75em;
-  display: inline-block;
-  background: #eaeaea;
-  color: #333;
-  border-radius: 0.3em;
-  padding: 0.2em 0.4em;
-  margin-right: 0.4em;
-  margin-bottom: 0.2em;
-  border: 0;
-  letter-spacing: 0.06em;
+const FlowerWrapper = styled.div `
+  position: absolute;
+  z-index: 2;
+  top: 35px;
+  right: 20px;
 `
 
 const FlowerWrapper = styled.div `
