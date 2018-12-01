@@ -394,7 +394,11 @@
 		"company":"Enterprise"
 	},
 	"searchbar":{
-		"placeholder":"What are you looking for? (# for tags)"
+		"placeholder":"What are you looking for?",
+		"suggestions":"Suggestions",
+		"placesPlaceholder":"Search for places…",
+		"searchForPlaceholder":"Search for \"%1\"",
+		"noSuggestions":"Type for suggestions…"
 	},
 	"resultlist":{
 		"showMoreEntries":"Show more entries...",

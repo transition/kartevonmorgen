@@ -49,6 +49,8 @@ class Main extends Component {
 
   componentDidMount(){
     document.addEventListener("keydown", (e) => this.escFunction(e), false);
+    this.props.dispatch(Actions.showStart());
+    this.props.dispatch(Actions.getAllTags())
   }
 
   componentWillUnmount(){
@@ -153,8 +155,9 @@ class Main extends Component {
 
           <Swipeable onSwipedLeft={ () => this.swipedLeftOnPanel() }>
             <LeftPanel className={"left " + (view.showLeftPanel && !view.menu ? 'opened' : 'closed')}>
-              <div className={"search " + ((view.left === V.RESULT) ? 'open' : 'closed')}>
+              <div className={"search " + ((view.left === V.RESULT || view.left === V.START) ? 'open' : 'closed')}>
                 <SearchBar
+                  tags={search.tags}
                   searchText={search.text}
                   categories={search.categories}
                   type="integrated"
@@ -168,11 +171,17 @@ class Main extends Component {
                     }
                   }}
                   onChange={txt => {
-                    if (txt == null) {
-                      txt = "";
-                    }
+                    if (txt == null) { txt = "" }
                     dispatch(Actions.setSearchText(txt));
                     return dispatch(Actions.search());
+                  }}
+                  onPlaceSearch={txt => {
+                    dispatch(Actions.setSearchText(''));
+                    dispatch(Actions.showResultList());
+                    dispatch(Actions.setCitySearchText(txt));
+                    if (txt && txt.length > 3) {
+                      return dispatch(Actions.searchCity());
+                    }
                   }}
                   onEscape={ () => {
                     return dispatch(Actions.setSearchText(''));
@@ -629,5 +638,5 @@ const StyledApp = styled.div `
   .license input {
     margin-top: 0.7em;
   }
+}
 `
-

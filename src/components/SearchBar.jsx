@@ -1,12 +1,13 @@
-import { translate }                          from "react-i18next";
-import React                                  from "react";
-import { pure }                               from "recompose";
-import T                                      from "prop-types";
-import { MAIN_IDS, CSS_CLASS_SIZE, NAMES }    from "../constants/Categories";
-import styled, { keyframes }                  from "styled-components";
-import { FontAwesomeIcon }                    from '@fortawesome/react-fontawesome'
-import STYLE                                  from "./styling/Variables"
-import { SpinLoader }                         from 'react-loaders-spinners';
+import { translate } from "react-i18next";
+import React from "react";
+import { pure } from "recompose";
+import T from "prop-types";
+import { MAIN_IDS, CSS_CLASS_SIZE, NAMES } from "../constants/Categories";
+import styled, { keyframes } from "styled-components";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import STYLE from "./styling/Variables"
+import { SpinLoader } from 'react-loaders-spinners';
+import TagAutocomplete from './Tags/TagAutocomplete';
 
 class RawCategoryButtons extends React.Component {
 
@@ -62,7 +63,7 @@ class SearchBar extends React.Component {
 
   render() {
 
-    const { categories, disabled, toggleCat, searchText, t, loading } = this.props;
+    const { categories, disabled, toggleCat, searchText, t, loading, tags } = this.props;
 
 
     return (
@@ -80,24 +81,29 @@ class SearchBar extends React.Component {
         <div className = "pure-u-1">
           <div onClick = { this.props.onLenseClick } className = "search-icon">
             { loading ?
-                <SpinLoader
-                  height={17}
-                  width={17}
-                  thickness={3}
-                  pColor={STYLE.darkGray}
-                  sColor="white"/>
+              <SpinLoader
+                height={17}
+                width={17}
+                thickness={3}
+                pColor={STYLE.darkGray}
+                sColor="white"/>
               : <MagnifyingGlassIcon icon="search" />
             }
           </div>
 
-          <SearchInput
-            onChange    = { this.onChange }
+          <TagAutocomplete
+            onChange = { this.props.onChange }
+            onPlaceSearch = { this.props.onPlaceSearch }
+            searchText = { this.props.searchText }
+            allTags = {tags}
+          />
+          {/* onChange    = { this.onChange }
             disabled    = { disabled }
             onKeyUp     = { this.onKeyUp }
             onFocus     = { this.onFocus }
             value       = { searchText || '' }
             className   = "pure-u-1"
-            placeholder = { t("searchbar.placeholder") } />
+            placeholder = { t("searchbar.placeholder") } /> */}
         </div>
       </Bar>)
   }
@@ -199,19 +205,6 @@ const MainCategories = styled.div `
   }
 `
 
-const SearchInput = styled.input `
-  ::placeholder{
-    color: #aaa;
-  }
-  border: 1px solid rgba(0,0,0,0.1) !important;
-  border-radius: 0px !important;
-  font-size: 1.1em !important;
-  line-height: 1.7em !important;
-  font-weight: 300;
-  padding-left: 3.1em !important;
-`;
-
-
 const Bar = styled.div `
 
   ${props => props.integrated && `
@@ -248,10 +241,11 @@ const Bar = styled.div `
 
   .search-icon{
     position: absolute;
-    margin: 0.5em 0 0 0.9em;
+    margin: 0.85em 0 0 0.9em;
     display: inline-block;
-    color: ${STYLE.darkGray};
     z-index: 5;
-    font-size: 1.2rem;
+    color: ${STYLE.darkGray};
+    position: absolute;
   }
+
 `

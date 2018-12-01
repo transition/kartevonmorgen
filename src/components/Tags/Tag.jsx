@@ -6,13 +6,19 @@ import { pure } from "recompose";
 class Tag extends Component {
 
   render(){
-    const {onClick, text, clickable } = this.props
+    const {onClick, text, clickable, quotes } = this.props
 
     return(
       <TagLink
         clickable={ clickable }
         onClick={ clickable ? onClick : () => false }
-      >#{text}</TagLink>
+        className="tag"
+      >
+        {quotes
+          ? <span>"{text}"</span>
+          : <span>#{text}</span>
+        }
+      </TagLink>
     )
   }
 }
@@ -31,6 +37,7 @@ const TagLink = styled.a `
   margin-bottom: 0.2rem;
   margin-right: 0.4em;
   letter-spacing: 0.06em;
+  line-height: 1.2em;
 
   ${props => props.clickable && `
     cursor: pointer;
