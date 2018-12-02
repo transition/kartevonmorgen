@@ -217,8 +217,8 @@ const StyledSelect = styled(Select) `
   border-radius: 0 !important;
   font-size: 1.1em !important;
   line-height: 1.7em !important;
-  font-weight: 500;
   padding: .3em 0;
+  font-weight: normal;
   
   > .search-input__control, > .search-input__control--is-focused {
     border: 0 !important;

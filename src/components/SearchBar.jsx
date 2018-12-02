@@ -130,12 +130,10 @@ const MagnifyingGlassIcon = styled(FontAwesomeIcon)`
   margin: 0.1em 0 0 0.1em;
   animation-duration: 150ms;
   animation-name: turn;
-
   @keyframes turn {
     from {
       transform: rotate(330deg);
     }
-
     to {
       transform: rotate(360deg);
     }
@@ -146,7 +144,7 @@ const MainCategories = styled.div `
 
   font-size: 0.8em;
   color: ${STYLE.darkGray};
-
+  
   button {
     padding: 0.5em;
     text-transform: uppercase;
@@ -239,13 +237,24 @@ const Bar = styled.div `
     padding-left:  2em;
   }
 
-  .search-icon{
+  /* .search-icon{
     position: absolute;
     margin: 0.85em 0 0 0.9em;
     display: inline-block;
     z-index: 5;
     color: ${STYLE.darkGray};
     position: absolute;
+  } */
+
+  .search-icon{
+    display: inline-block;
+    font-size: 1.2rem;
+    
+  }
+
+  .locate-icon{
+    margin-left: -2em;
+    padding: 0.4em 0.6em;
   }
 
 `

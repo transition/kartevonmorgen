@@ -19,8 +19,6 @@ import styled               from "styled-components";
 
 class Sidebar extends Component {
 
-  entryContent = null;
-
   shouldComponentUpdate(nextProps) {
     if (!nextProps.view.showLeftPanel) return false
     if (!this.props.view.showLeftPanel && nextProps.view.showLeftPanel) return true

@@ -7,7 +7,7 @@ import AddressLine from "./AddressLine";
 import T from "prop-types";
 import Actions from "../Actions";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ROUTEPLANNERS } from "../constants/URLs.js"
+import { ROUTEPLANNER } from "../constants/URLs.js"
 import { NAMES } from "../constants/Categories"
 import Tag from "./Tags/Tag"
 
