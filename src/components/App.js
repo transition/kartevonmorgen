@@ -228,7 +228,7 @@ class Main extends Component {
               <button onClick={()=>{ 
                 dispatch(Actions.setSearchText(''));
                 return dispatch(Actions.showStart());
-                }} >
+              }} >
                 <span>
                   <MenuFontAwesomeIcon icon={'bars'} />
                 </span>

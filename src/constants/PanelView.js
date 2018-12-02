@@ -2,6 +2,7 @@ module.exports = {
   EDIT: 'EDIT',
   NEW: 'NEW',
   NEW_RATING: 'NEW_RATING',
+  START: 'START',
   RESULT: 'RESULT',
   ENTRY: 'ENTRY',
   INFO: 'INFO',

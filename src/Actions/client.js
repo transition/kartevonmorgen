@@ -78,6 +78,12 @@ const Actions = {
     payload: id
   }),
 
+  showStart: () =>
+    (dispatch) => {
+      dispatch(Actions.showLeftPanel())
+      dispatch({ type: T.SHOW_START })
+    },
+
   showInfo: (key) => ({
     type: T.SHOW_INFO,
     payload: key

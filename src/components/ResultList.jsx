@@ -155,12 +155,17 @@ const ListElement = styled.li `
       height: 1.2em;
     }
   }
-  &.current-entry {
-    background: #fff;
+  h3 {
+    font-size: 1.2em;
+    margin: .2rem .3em .2rem 0;
   }
-  &:hover {
-    background: #fff;
+  
+  background-color: #fff;
+
+  &.current-entry, &:hover {
+    background-color: #fafafa;
   }
+  
   &.event {
     &.current-entry {
       border-left: 5px solid ${STYLE.event};
