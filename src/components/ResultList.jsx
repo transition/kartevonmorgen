@@ -253,13 +253,6 @@ const FlowerWrapper = styled.div `
   right: 20px;
 `
 
-const FlowerWrapper = styled.div `
-  position: absolute;
-  z-index: 2;
-  top: 35px;
-  right: 20px;
-`
-
 const Wrapper = styled.div `
 .result-list {
   p {
