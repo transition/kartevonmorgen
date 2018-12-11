@@ -10,11 +10,15 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import STYLE from "./styling/Variables"
 import styled from "styled-components";
-import Tag from "./Tags/Tag"
+// import Tag from "./Tags/Tag"
 
 const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, onMouseLeave, t}) => {
   var css_class = highlight ? 'highlight-entry ' : '';
   css_class = css_class + NAMES[entry.categories && entry.categories[0]];
+
+  let description = entry.description;
+  if(description.length > 150) description = description.substring(0,131 + description.substring(130).indexOf(".") ) + ' …'
+  if(description.length > 160) description = description.substring(0,131 + description.substring(130).indexOf(" ") ) + ' …'
 
   return (
     <ListElement
@@ -24,7 +28,7 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
       onMouseEnter  = { (ev) => { ev.preventDefault(); onMouseEnter(entry.id) }}
       onMouseLeave  = { (ev) => { ev.preventDefault(); onMouseLeave(entry.id) }} >
       <div className = "pure-g">
-        <div className = "pure-u-23-24">
+        <div className = "pure-u-19-24">
           <div className="category">
             <span className="category">
               { t("category." + NAMES[entry.categories && entry.categories[0]]) }
@@ -34,20 +38,20 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
             <EntryTitle className="title">{entry.title}</EntryTitle>
           </div>
           <div>
-            <Description>{entry.description}</Description>
+            <Description>{description}</Description>
           </div>
           <FlowerWrapper>
             <Flower ratings={ratings} radius={30} showTooltip={false}/>
           </FlowerWrapper>
           {
-            entry.tags ? (entry.tags.length > 0)
+          /*  entry.tags ? (entry.tags.length > 0)
               ? <TagsWrapper>
                 <ul >
                   { entry.tags.slice(0, 5).map(t => <Tag key={"Tag"+t} clickable={ false } text = {t} /> ) }
                 </ul>
               </TagsWrapper>
               : null
-              : null
+              : null*/
           }
         </div>
       </div>
@@ -232,6 +236,7 @@ const ListElement = styled.li `
 `
 
 const Description = styled.div`
+  hyphens: auto;
   position: relative;
   z-index: 3;
   font-size: 0.8em;
@@ -239,23 +244,23 @@ const Description = styled.div`
   text-shadow: 0.3px 0.3px 8px #fff;
 `;
 
-const TagsWrapper = styled.div `
-  position: relative;
-  z-index: 3;
-  margin-top: 0.4em;
-  float: left;
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-`
+// const TagsWrapper = styled.div `
+//   position: relative;
+//   z-index: 3;
+//   margin-top: 0.4em;
+//   float: left;
+//   ul {
+//     list-style: none;
+//     padding: 0;
+//     margin: 0;
+//   }
+// `
 
 const FlowerWrapper = styled.div `
   position: absolute;
   z-index: 2;
   top: 35px;
-  right: 20px;
+  right: .7rem;
 `
 
 const Wrapper = styled.div `
