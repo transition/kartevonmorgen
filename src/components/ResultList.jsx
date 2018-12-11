@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import STYLE from "./styling/Variables"
 import styled from "styled-components";
-// import Tag from "./Tags/Tag"
+import Tag from "./Tags/Tag"
 
 const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, onMouseLeave, t}) => {
   var css_class = highlight ? 'highlight-entry ' : '';
@@ -44,14 +44,14 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
             <Flower ratings={ratings} radius={30} showTooltip={false}/>
           </FlowerWrapper>
           {
-          /*  entry.tags ? (entry.tags.length > 0)
+            entry.tags ? (entry.tags.length > 0)
               ? <TagsWrapper>
                 <ul >
                   { entry.tags.slice(0, 5).map(t => <Tag key={"Tag"+t} clickable={ false } text = {t} /> ) }
                 </ul>
               </TagsWrapper>
               : null
-              : null*/
+              : null
           }
         </div>
       </div>
@@ -244,17 +244,20 @@ const Description = styled.div`
   text-shadow: 0.3px 0.3px 8px #fff;
 `;
 
-// const TagsWrapper = styled.div `
-//   position: relative;
-//   z-index: 3;
-//   margin-top: 0.4em;
-//   float: left;
-//   ul {
-//     list-style: none;
-//     padding: 0;
-//     margin: 0;
-//   }
-// `
+const TagsWrapper = styled.div `
+  display: none;
+
+  @media screen and (min-width: 1000px){
+    display: block;
+    z-index: 3;
+    margin-top: .7em;
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    } 
+  }
+`
 
 const FlowerWrapper = styled.div `
   position: absolute;
