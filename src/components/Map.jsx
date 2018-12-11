@@ -164,7 +164,6 @@ class MarkerLayer extends PureComponent {
   }
 
 
-
   render() {
 
     let markersArray = []
@@ -175,8 +174,6 @@ class MarkerLayer extends PureComponent {
     if (entries && entries.length > 0 ) {
       entries.forEach(e => {
         let avg_rating = null;
-        let yOffset = 10
-        if(e.ratings.length > 0 && avg_rating && avg_rating > 0) yOffset = 2
 
         const isHighlight = highlight.length > 0 && highlight.indexOf(e.id) == 0
 
@@ -198,7 +195,7 @@ class MarkerLayer extends PureComponent {
               icon      = { this.getIcon(markerSize) }
               opacity   = { opacity }
             >
-              { !isHighlight ? <LongTooltip entry={ e } /> : null }
+              { !isHighlight ? <LongTooltip entry={ e } offset={20} /> : null }
             </Marker>
           );
         } else {
@@ -221,7 +218,7 @@ class MarkerLayer extends PureComponent {
               fillColor = { this.getCategoryColorById(e.categories[0]) }
               fillOpacity = { opacity }
             > 
-              { !isHighlight ? <LongTooltip entry={ e } /> : null }
+              { !isHighlight ? <LongTooltip entry={ e } offset={8} /> : null }
             </CircleMarker>
           );
         }
@@ -236,7 +233,7 @@ class MarkerLayer extends PureComponent {
               opacity   = { 0 }
               fillOpacity = { 0 }
             > 
-              <SmallTooltip permanent={true} direction='bottom' offset={[0, yOffset]}><h3>{e.title}</h3></SmallTooltip>
+              <SmallTooltip permanent={true} direction='bottom' offset={[0, 20]}><h3>{e.title}</h3></SmallTooltip>
             </CircleMarker>);
         }
       });
@@ -257,12 +254,14 @@ class _LongTooltip extends Component {
 
 
   render() {
-    const { entry, t } = this.props
-    const maxLength = 100
-    const desc = (entry.description.length < maxLength) ? entry.description : entry.description.substr(0,maxLength) + ' …'
+    const { entry, t, offset } = this.props
+    let desc = entry.description;
+    if(desc.length > 110) desc = desc.substring(0,91 + desc.substring(90).indexOf(".") ) + ' …'
+    if(desc.length > 120) desc = desc.substring(0,91 + desc.substring(90).indexOf(" ") ) + ' …'
+  
      
     return(
-      <SmallTooltip direction='bottom' offset={[0, 10]}>
+      <SmallTooltip long={true} direction='bottom' offset={[0, offset]}>
         <React.Fragment>
           <span>{t("category." + NAMES[entry.categories && entry.categories[0]])}</span>
           <h3>{entry.title}</h3>
@@ -322,8 +321,11 @@ const LocateIcon = styled(FontAwesomeIcon)`
 `;
 
 const SmallTooltip = styled(Tooltip)`
-  min-width: 10.5rem;
-  white-space: normal !important;
+  
+  ${props => props.long && `
+    white-space: normal !important;
+    hyphens: auto;
+  `}
   > span {
     color: ${ STYLE.initiative };
     font-size: 0.67rem;
@@ -335,5 +337,8 @@ const SmallTooltip = styled(Tooltip)`
     margin: 0;
     padding: 0;
     font-size: 0.75rem;
+    ${props => props.long && `
+      min-width: 12rem;
+    `}
   }
 `
