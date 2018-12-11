@@ -14,7 +14,7 @@ class TransitionStart extends Component {
         <div className="entry">
 
           <EntryDetailPage>
-            <header style={{textAlign:"center",color:"#c66666"}} >
+            <header>
               <img src="https://transition-muc.de/wp-content/uploads/2018/05/map@2x-150x150.png" />
               <h1>Transition Map Prototyp</h1>
             </header>
@@ -55,6 +55,11 @@ max-width: 500px;
 background-color: #fff;
 margin-top: ${props => props.hasImage ? "244px" : "0"};
 line-height: 1.4;
+
+> header {
+  text-align: center;
+  color: ${STYLE.initiative};
+}
 
 a {
   color: ${STYLE.initiative};
