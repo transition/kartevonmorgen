@@ -9,6 +9,8 @@ import styled                       from "styled-components";
 import T                            from "prop-types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import L from 'leaflet'
+import { translate }          from "react-i18next";
+import { NAMES }    from "../constants/Categories"
 
 const { INITIATIVE, EVENT, COMPANY } = IDS;
 import  "leaflet/dist/leaflet.css"
@@ -96,7 +98,6 @@ class KVMMap extends Component {
             zoom = { zoom }
           />
 
-          }
         </Map>
         {showLocateButton ?
           <div className="leaflet-control-container">
@@ -177,6 +178,8 @@ class MarkerLayer extends PureComponent {
         let yOffset = 10
         if(e.ratings.length > 0 && avg_rating && avg_rating > 0) yOffset = 2
 
+        const isHighlight = highlight.length > 0 && highlight.indexOf(e.id) == 0
+
         if(e.ratings.length > 0 && Object.keys(ratings).length > 0){
           const ratings_for_entry = (e.ratings || []).map(id => ratings[id]);
           avg_rating = avg_rating_for_entry(ratings_for_entry);
@@ -195,7 +198,7 @@ class MarkerLayer extends PureComponent {
               icon      = { this.getIcon(markerSize) }
               opacity   = { opacity }
             >
-              <SmallTooltip direction='bottom' offset={[0, yOffset]}><h3>{e.title}</h3></SmallTooltip>
+              { !isHighlight ? <LongTooltip entry={ e } /> : null }
             </Marker>
           );
         } else {
@@ -218,12 +221,12 @@ class MarkerLayer extends PureComponent {
               fillColor = { this.getCategoryColorById(e.categories[0]) }
               fillOpacity = { opacity }
             > 
-              <SmallTooltip direction='bottom' offset={[0, yOffset]}><h3>{e.title}</h3></SmallTooltip>
+              { !isHighlight ? <LongTooltip entry={ e } /> : null }
             </CircleMarker>
           );
         }
 
-        if(highlight.length > 0 && highlight.indexOf(e.id) == 0){
+        if(isHighlight){
 
           markersArray.push(
             <CircleMarker
@@ -249,6 +252,28 @@ class MarkerLayer extends PureComponent {
     )
   }
 }
+
+class _LongTooltip extends Component {
+
+
+  render() {
+    const { entry, t } = this.props
+    const maxLength = 100
+    const desc = (entry.description.length < maxLength) ? entry.description : entry.description.substr(0,maxLength) + ' …'
+     
+    return(
+      <SmallTooltip direction='bottom' offset={[0, 10]}>
+        <React.Fragment>
+          <span>{t("category." + NAMES[entry.categories && entry.categories[0]])}</span>
+          <h3>{entry.title}</h3>
+          <p>{desc}</p>
+        </React.Fragment>
+      </SmallTooltip>            
+    )
+  }
+}
+
+const LongTooltip = translate('translation')(pure(_LongTooltip))
 
 
 const Wrapper = styled.div`
@@ -297,7 +322,16 @@ const LocateIcon = styled(FontAwesomeIcon)`
 `;
 
 const SmallTooltip = styled(Tooltip)`
+  min-width: 10.5rem;
+  white-space: normal !important;
+  > span {
+    color: ${ STYLE.initiative };
+    font-size: 0.67rem;
+    text-transform: uppercase;
+  }
   > h3 {
+    font-weight: bold;
+    font-family: sans-serif;
     margin: 0;
     padding: 0;
     font-size: 0.75rem;
