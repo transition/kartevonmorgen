@@ -366,6 +366,8 @@ const LeftPanel = styled.div `
   }
   &.opened {
     max-width: 380px;
+    @media only screen and (min-width: 1000px) { max-width: 420px; }
+    
     width: 90%;
     .menu {
       width: 100%;
