@@ -16,6 +16,7 @@ const { INITIATIVE, EVENT, COMPANY } = IDS;
 import  "leaflet/dist/leaflet.css"
 
 const munichBounds = L.latLngBounds(L.latLng(48.4,12.349), L.latLng(47.744,10.494));
+var searchTimer = 0;
 
 
 class KVMMap extends Component {
@@ -52,6 +53,14 @@ class KVMMap extends Component {
     }
   }
 
+  _onMoveend () {
+    this.props.onMoveend(this.getMapCoordinates()) 
+  }
+
+  _onZoomend () {
+    this.props.onZoomend(this.getMapCoordinates()) 
+  }
+
   render() {
   
     const {
@@ -59,8 +68,6 @@ class KVMMap extends Component {
       center,
       zoom,
       marker,
-      onMoveend,
-      onZoomend,
       onClick,
       onMarkerClick,
       ratings,
@@ -84,8 +91,8 @@ class KVMMap extends Component {
           zoomControl = { false }
           className   = "map"
           attributionControl= { false }
-          onMoveend   = { (e) => { onMoveend(this.getMapCoordinates()) }}
-          onZoomend   = { (e) => { onZoomend(this.getMapCoordinates()) }}
+          onMoveend   = { () => { this._onMoveend() }}
+          onZoomend   = { () => { this._onZoomend() }}
           onClick     = { (e) => { onClick(e) }} >
           
           <AttributionControl prefix={false} />

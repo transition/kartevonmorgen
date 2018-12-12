@@ -251,9 +251,12 @@ class Main extends Component {
                 if(event.originalEvent.srcElement.tagName.toLowerCase() === 'path') return false;
                 
                 //back to overview
-                dispatch(Actions.setCurrentEntry(null, null));
-                dispatch(Actions.showSearchResults());
-                dispatch(Actions.setCenterInUrl(mapCenter));
+                if(view.left !== V.START)
+                {
+                  dispatch(Actions.setCurrentEntry(null, null));
+                  dispatch(Actions.showSearchResults());
+                  dispatch(Actions.setCenterInUrl(mapCenter));
+                }
 
                 dispatch(Actions.hideLeftPanelOnMobile());
                 return dispatch(Actions.setMarker(event.latlng));
