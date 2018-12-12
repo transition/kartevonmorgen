@@ -81,41 +81,45 @@ class ResultList extends Component {
       results.push(
         <ListElement key="show-more-entries">
           <div>
-            <a onClick = { onMoreEntriesClick } href="#">
+            <MoreEntriesLink onClick = { onMoreEntriesClick } href="#">
               {t("resultlist.showMoreEntries")}
-            </a>
+            </MoreEntriesLink>
           </div>
         </ListElement>
       );
     }
 
-  return (
-    <Wrapper>
-      <div className= "result-list">
-      {
-        (results.length > 0)
-          ? <ul>{results}</ul>
-          : (waiting ?
-          <p className= "loading">
-            <span>{t("resultlist.entriesLoading")}</span>
-          </p>
-          : <p className= "no-results">
-              <FontAwesomeIcon icon={['far', 'frown']} /> <span>{t("resultlist.noEntriesFound")}</span>
-            </p>)
-      }
-      </div>
-      <nav className="menu pure-g">
-        <NavButton
-          key = "back"
-          classname = "pure-u-1"
-          icon = "plus"
-          text = {t("resultlist.addEntry")}
-          onClick = {() => {
-            dispatch(Actions.showNewEntry());
-          }}
-        />
-      </nav>
-    </Wrapper>)
+    return (
+      <Wrapper>
+        <div className= "result-list">
+          {
+            (results.length > 0)
+              ? <ul>{results}</ul>
+              : (waiting ?
+                <p className= "loading">
+                  <MoreEntriesLink onClick = { onMoreEntriesClick } href="#">
+                    {t("resultlist.showMoreEntries")}
+                  </MoreEntriesLink>
+                </p>
+                : <p className= "no-results">
+                  <MoreEntriesLink onClick = { onMoreEntriesClick } href="#">
+                    {t("resultlist.showMoreEntries")}
+                  </MoreEntriesLink>
+                </p>)
+          }
+        </div>
+        <nav className="menu pure-g">
+          <NavButton
+            key = "back"
+            classname = "pure-u-1"
+            icon = "plus"
+            text = {t("resultlist.addEntry")}
+            onClick = {() => {
+              dispatch(Actions.showNewEntry());
+            }}
+          />
+        </nav>
+      </Wrapper>)
   }
 }
 
@@ -140,6 +144,11 @@ const EntryTitle = styled.h3`
   position: relative;
   z-index: 3;
 `;
+
+const MoreEntriesLink = styled.a`
+  color: ${ STYLE.initiative };
+  font-size:1.1rem;
+`
 
 const ListElement = styled.li `
   position: relative;
@@ -269,15 +278,7 @@ const FlowerWrapper = styled.div `
 const Wrapper = styled.div `
 .result-list {
   p {
-    &.no-results {
-      margin: 0;
-      padding: 1em;
-      font-size: 0.9em;
-      span {
-        margin-left: 0.5em;
-      }
-    }
-    &.loading {
+    &.no-results, &.loading  {
       margin: 0;
       padding: 1em;
       font-size: 0.9em;

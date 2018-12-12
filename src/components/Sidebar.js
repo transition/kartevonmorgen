@@ -78,7 +78,10 @@ class Sidebar extends Component {
               ratings={ ratings }
               highlight={ search.highlight}
               moreEntriesAvailable={ search.moreEntriesAvailable }
-              onMoreEntriesClick={ () => { return dispatch(Actions.showAllEntries()); }}
+              onMoreEntriesClick={ () => {
+                dispatch(Actions.showAllEntries())
+                return dispatch(Actions.search());
+              }}
               dispatch={dispatch}
             />
             {

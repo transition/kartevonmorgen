@@ -401,7 +401,7 @@
 		"noSuggestions":"Type for suggestions…"
 	},
 	"resultlist":{
-		"showMoreEntries":"Show more entries...",
+		"showMoreEntries":"Show all entries again...",
 		"entriesLoading":"Entries are loaded...",
 		"noEntriesFound":"No entries found.",
 		"addEntry":"add a new entry",
