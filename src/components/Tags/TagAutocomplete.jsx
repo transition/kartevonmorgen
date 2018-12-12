@@ -22,7 +22,7 @@ const TagOption = (props) => {
   return (
     <_TagOption {...props.innerProps} isTag={isTag} isFocused={props.isFocused} >
       
-      <FontAwesomeIcon icon={icon} />
+      { !isTag ? <FontAwesomeIcon icon={icon} /> : null }
       
       { isTag
         ? <Tag clickable={true} text={props.data.value} />
@@ -231,10 +231,12 @@ const StyledSelect = styled(Select) `
   }
 
   .search-input__value-container {
-    padding-left: 2.5em !important;
+    padding-left: 3em !important;
+    font-size: 1.2rem;
 
     .tag {
       font-size: .9em !important;
+      margin-bottom: 0;
     }
   }
 
@@ -247,7 +249,7 @@ const _TagOption = styled.div `
   cursor: pointer;
   display: block;
   line-height: 2.5rem;
-  background-color: ${props => props.isFocused ? "rgba(0,152,137,0.15)" : "#fff"};
+  background-color: ${props => props.isFocused ? "#f3f3f3" : "#fff"};
 
   > a {
     display: inline-block;
@@ -265,6 +267,7 @@ const _TagOption = styled.div `
     position: absolute;
     margin-top: .75rem;
     margin-left: -1.5rem;
+    opacity: ${props => props.isFocused ? "0.8" : "0.1"};
   }
 
   .tag svg{
@@ -272,7 +275,7 @@ const _TagOption = styled.div `
   }
 
   ${props => props.isFocused && `  
-    background-color: rgba(0,152,137,0.15);
+    background-color: #f3f3f3;
     .tag {
         color: #fff;
         background-color: #333;

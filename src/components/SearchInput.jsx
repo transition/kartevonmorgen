@@ -248,8 +248,8 @@ const StyledCreatable = styled(Creatable) `
   }
 
   .search-input__value-container {
-        padding-left: 2.5em !important;
-        
+    padding-left: 3em !important;
+    font-size: 1.2rem;
   }
 
   .tag-wrapper .search-input__option{
