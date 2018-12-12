@@ -85,7 +85,7 @@ module.exports = (state=initialState, action={}) => {
     case T.SET_SEARCH_TIME:
       return {
         ...state,
-        loadingSearch: true
+        loadingSearch: (payload===null) ? true : false
       }
 
     case T.SEARCH_RESULT:

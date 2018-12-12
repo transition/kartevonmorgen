@@ -237,11 +237,6 @@ const Actions = {
 
   onZoomend: (coordinates, zoom) =>
     (dispatch, getState) => {
-      dispatch({
-        type: T.SET_SEARCH_TIME,
-        payload: Date.now()
-      });
-
       if(coordinates.zoom != zoom){
         dispatch(Actions.setZoom(coordinates.zoom));
       }
