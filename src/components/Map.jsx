@@ -220,7 +220,7 @@ class MarkerLayer extends PureComponent {
           let opacity = 0.5;
           if(highlight.indexOf(e.id) == 0 || highlight.length == 0) opacity = 1;
 
-          const circleSize = markerSize/5
+          const circleSize = markerSize/4
 
           markersArray.push(
             <CircleMarker
