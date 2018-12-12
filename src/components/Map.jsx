@@ -15,6 +15,8 @@ import { NAMES }    from "../constants/Categories"
 const { INITIATIVE, EVENT, COMPANY } = IDS;
 import  "leaflet/dist/leaflet.css"
 
+const munichBounds = L.latLngBounds(L.latLng(48.4,12.349), L.latLng(47.744,10.494));
+
 
 class KVMMap extends Component {
 
@@ -76,6 +78,7 @@ class KVMMap extends Component {
         <Map
           ref         = 'map'
           center      = { center }
+          maxBounds   = { munichBounds.pad(0.3) }
           zoom        = { zoom }
           zoomSnap    = { 1.0 }
           zoomControl = { false }
