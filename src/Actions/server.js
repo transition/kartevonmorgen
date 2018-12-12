@@ -81,16 +81,16 @@ const Actions = {
             }
           });
 
-          if (search.text != null) {
-            const address = search.text.replace(/#/g, "");
-            WebAPI.searchAddressTilehosting(address, (err, res) => {
-              dispatch({
-                type: T.SEARCH_ADDRESS_RESULT,
-                payload: err || res.results,
-                error: err != null
-              });
-            });
-          }
+          // if (search.text != null) {
+          //   const address = search.text.replace(/#/g, "");
+          //   WebAPI.searchAddressTilehosting(address, (err, res) => {
+          //     dispatch({
+          //       type: T.SEARCH_ADDRESS_RESULT,
+          //       payload: err || res.results,
+          //       error: err != null
+          //     });
+          //   });
+          // }
         }
       };
 
