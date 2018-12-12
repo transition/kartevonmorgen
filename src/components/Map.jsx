@@ -174,7 +174,7 @@ class MarkerLayer extends PureComponent {
     let markersArray = []
     //return markersArray;
     const { entries, ratings, highlight, onMarkerClick, marker, zoom } = this.props
-    const markerSize = 18+ (zoom-9)*6
+    const markerSize = 12+ (zoom-9)*4
 
     if (entries && entries.length > 0 ) {
       entries.forEach(e => {
