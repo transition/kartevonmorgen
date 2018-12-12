@@ -87,6 +87,7 @@ class KVMMap extends Component {
           center      = { center }
           maxBounds   = { munichBounds.pad(0.3) }
           zoom        = { zoom }
+          minZoom     = { 10 }
           zoomSnap    = { 1.0 }
           zoomControl = { false }
           className   = "map"

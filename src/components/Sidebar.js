@@ -18,6 +18,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import STYLE                from "./styling/Variables"
 import styled               from "styled-components";
 import EntryImage from "./EntryImage";
+import L from 'leaflet'
+const munichBounds = L.latLngBounds(L.latLng(48.4,12.349), L.latLng(47.744,10.494));
 
 class Sidebar extends Component {
 
@@ -54,8 +56,11 @@ class Sidebar extends Component {
       ratings, dispatch, map, form, t } = this.props;
     const { waiting_for_search_results } = view;
     const { explainRatingContext, selectedContext } = view;
-    const invisibleEntries = search.invisible.filter(e => entries[e.id]).map(e => entries[e.id]);
-
+      
+    const invisibleEntries = search.invisible.filter((e) => {
+      return (entries[e.id] && munichBounds.contains([e.lat,e.lng]))
+    }).map(e => entries[e.id]);
+    
     const entry = entries[search.current] || null;
 
     var content;
