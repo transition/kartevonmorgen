@@ -1,13 +1,13 @@
 import reducers from "./reducers";
 import thunk    from "redux-thunk"; // lets us dispatch() functions
-import logger   from "redux-logger";
+// import logger   from "redux-logger";
 
 let middlewares = [thunk];
 
 import { createStore, applyMiddleware } from "redux";
 
 if (__DEVELOPMENT__) {
-  middlewares.push(logger);
+  // middlewares.push(logger);
 }
 
 // https://github.com/zalmoxisus/redux-devtools-extension
