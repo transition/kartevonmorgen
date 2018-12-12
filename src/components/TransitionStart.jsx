@@ -45,12 +45,9 @@ class TransitionStart extends Component {
             <p><b>Viel Spaß beim testen!</b></p>
             <br/>
             <div style={{marginTop:'3rem', opacity:0.8, fontSize:'0.75rem', marginBottom:'5rem'}}>
-              <hr/>
-              <ul>
-                <li>Zur <a href="https://transition-muc.de" target="_blank">Webseite von Transition München</a></li>
-                <li>Zum <a href="https://munich.impacthub.net/impressum/" target="_blank">Impressum</a></li>
-                <li>Für die Nutzung der Karte gilt die Datenschutzerklärung der <a href="https://www.kartevonmorgen.org" target="_blank">Karte Von Morgen</a></li>
-              </ul>
+              <hr/>              
+              <p><a href="https://transition-muc.de" target="_blank">Webseite von Transition München</a> | <a href="https://munich.impacthub.net/impressum/" target="_blank">Impressum</a></p>
+              <p>Für die Nutzung der Karte gilt die Datenschutzerklärung der <br/><a href="https://www.kartevonmorgen.org" target="_blank">Karte Von Morgen</a>.</p>
             </div>
 
           </EntryDetailPage>
