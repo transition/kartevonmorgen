@@ -161,6 +161,8 @@ class Main extends Component {
                   searchText={search.text}
                   categories={search.categories}
                   type="integrated"
+                  dispatch={dispatch}
+                  start={view.left === V.START}
                   disabled={view.left === V.EDIT || view.left === V.NEW}
                   toggleCat={ c => {
                     if (c === C.IDS.EVENT) {
@@ -223,7 +225,7 @@ class Main extends Component {
             </button>
           </HiddenSidebar>   
           
-          <RightPanel>
+          {/* <RightPanel>
             <div className="menu-toggle">
               <button onClick={()=>{ 
                 dispatch(Actions.setSearchText(''));
@@ -234,7 +236,7 @@ class Main extends Component {
                 </span>
               </button>
             </div>
-          </RightPanel> 
+          </RightPanel>  */}
 
           <Swipeable onSwipedRight={ (e, deltaX) => this.swipedRightOnMap(e, deltaX) } className="center">
             <Map
@@ -377,9 +379,6 @@ const LeftPanel = styled.div `
     &.closed {
       display: none;
     }
-    .main-categories {
-      height: 2.1em;
-    }
   }
   nav {
     &.menu {
@@ -418,7 +417,7 @@ const LeftPanel = styled.div `
     }
   }
 `
-
+/*
 const RightPanel = styled.div `
   position: absolute;
   top: 15px;
@@ -458,7 +457,7 @@ const RightPanel = styled.div `
       margin-right: 0.3em;
     }
   }
-`
+`*/
 
 const HiddenSidebar = styled.div `
   position: relative;

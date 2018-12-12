@@ -8,33 +8,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import STYLE from "./styling/Variables"
 import { SpinLoader } from 'react-loaders-spinners';
 import TagAutocomplete from './Tags/TagAutocomplete';
+import Actions              from "../Actions"
 
-class RawCategoryButtons extends React.Component {
+// class RawCategoryButtons extends React.Component {
 
-  render() {
-    const { disabled, active, onToggle, t } = this.props;
-    const buttons = MAIN_IDS.map((c) => {
-      const act = [].indexOf.call(active || [], c) >= 0;
-      return (
-        <button
-          key       = { c }
-          disabled  = { disabled }
-          onClick   = { () => { onToggle(c) }}
-          className = { NAMES[c] + " " + CSS_CLASS_SIZE[c] + (act ? " active" : "")}>
-          { t("category." + NAMES[c]) + " " }
-        </button>);
-    });
-    return (<div>{ buttons }</div>);
-  }
-}
+//   render() {
+//     const { disabled, active, onToggle, t } = this.props;
+//     const buttons = MAIN_IDS.map((c) => {
+//       const act = [].indexOf.call(active || [], c) >= 0;
+//       return (
+//         <button
+//           key       = { c }
+//           disabled  = { disabled }
+//           onClick   = { () => { onToggle(c) }}
+//           className = { NAMES[c] + " " + CSS_CLASS_SIZE[c] + (act ? " active" : "")}>
+//           { t("category." + NAMES[c]) + " " }
+//         </button>);
+//     });
+//     return (<div>{ buttons }</div>);
+//   }
+// }
 
-RawCategoryButtons.propTypes = {
-  active     : T.array,
-  disabled   : T.bool,
-  onToggle   : T.func
-};
+// RawCategoryButtons.propTypes = {
+//   active     : T.array,
+//   disabled   : T.bool,
+//   onToggle   : T.func
+// };
 
-const CategoryButtons = pure(RawCategoryButtons);
+// const CategoryButtons = pure(RawCategoryButtons);
 
 class SearchBar extends React.Component {
 
@@ -63,20 +64,21 @@ class SearchBar extends React.Component {
 
   render() {
 
-    const { categories, disabled, toggleCat, searchText, t, loading, tags } = this.props;
+    const { categories, disabled, toggleCat, searchText, t, loading, tags, dispatch, start } = this.props;
 
 
     return (
       <Bar
         className = "SearchBar pure-g" integrated={this.props.type==="integrated"} standalone= {this.props.type==="standalone"} >
-        <MainCategories className = "main-categories pure-u-1 pure-g" standalone= {this.props.type==="standalone"}>
-          <CategoryButtons
+        {/*<MainCategories className = "main-categories pure-u-1 pure-g" standalone= {this.props.type==="standalone"}>
+          
+           <CategoryButtons
             active    = { categories }
             disabled  = { disabled   }
             onToggle  = { toggleCat  }
             t         = { t }
-          />
-        </MainCategories>
+          /> 
+        </MainCategories>*/}
 
         <div className = "pure-u-1">
           <div onClick = { this.props.onLenseClick } className = "search-icon">
@@ -87,7 +89,15 @@ class SearchBar extends React.Component {
                 thickness={3}
                 pColor={STYLE.darkGray}
                 sColor="white"/>
-              : <MagnifyingGlassIcon icon="search" />
+              : <button onClick={()=>{ 
+                if(start) return dispatch(Actions.showResultList());
+                dispatch(Actions.setSearchText(''));
+                return dispatch(Actions.showStart());
+              }} >
+                <span>
+                  <FontAwesomeIcon icon={'bars'} />
+                </span>
+              </button>
             }
           </div>
 
@@ -142,15 +152,16 @@ const MagnifyingGlassIcon = styled(FontAwesomeIcon)`
 
 const MainCategories = styled.div `
 
-  font-size: 0.8em;
-  color: ${STYLE.darkGray};
+  font-size: 1rem;
+  color: #000;
+  background-color: #eaeaea;
   
   button {
-    padding: 0.5em;
-    text-transform: uppercase;
-    background-color: #f7f7f7;
+    padding: 0.6em;
+    /* text-transform: uppercase; */
+    /* background-color: #f7f7f7; */
   }
-
+/*
   button > i.toggle {
     text-align: left;
     display: block;
@@ -175,7 +186,7 @@ const MainCategories = styled.div `
   button.active > i.toggle {
     text-align: right !important;
   }
-
+*/
   ${props => props.standalone && `
     button:first-child {
       border-radius: ${borderRadius} 0 0 0;
@@ -204,6 +215,10 @@ const MainCategories = styled.div `
 `
 
 const Bar = styled.div `
+
+  /* .main-categories {
+    height: 2.4em;
+  } */
 
   ${props => props.integrated && `
     border-bottom: 1px solid ${STYLE.lightGray};
@@ -239,11 +254,16 @@ const Bar = styled.div `
 
   .search-icon{
     position: absolute;
-    margin: 0.85em 0 0 0.9em;
+    margin: 1em 0 0 0.9em;
     display: inline-block;
     z-index: 5;
     color: ${STYLE.darkGray};
     position: absolute;
+
+    svg {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
   }
 
   /* .search-icon{
