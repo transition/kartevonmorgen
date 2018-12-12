@@ -1,5 +1,5 @@
 import React, { Component,PureComponent }         from "react"
-import { Map, TileLayer, Marker, CircleMarker, Tooltip }   from "react-leaflet"
+import { Map, TileLayer, Marker, CircleMarker, Tooltip, AttributionControl, ZoomControl }   from "react-leaflet"
 import URLs                         from "../constants/URLs"
 import { pure }                     from "recompose"
 import { IDS }                      from  "../constants/Categories"
@@ -36,7 +36,7 @@ class KVMMap extends Component {
     const map = this.refs.map;
     if (map) {
       //map.fireLeafletEvent('load', map) 
-      map.leafletElement.addControl(L.control.zoom({position: 'bottomright'}))
+      // map.leafletElement.addControl(L.control.zoom({position: 'bottomright'}))
       this.props.onMoveend(this.getMapCoordinates())
     }
   }
@@ -68,7 +68,7 @@ class KVMMap extends Component {
 
 
     let attribution = ""
-    URLs.TILE_SERVER_ATTR.name ? attribution = '<a class="osm attr" href=' + URLs.TILE_SERVER_ATTR.link + '>' + URLs.TILE_SERVER_ATTR.name + '</a> | '  : null
+    URLs.TILE_SERVER_ATTR.name ? attribution = '<a href="https://kartevonmorgen.org">♥ Karte von Morgen</a> | <a class="osm attr" href=' + URLs.TILE_SERVER_ATTR.link + '>' + URLs.TILE_SERVER_ATTR.name + '</a> | '  : null
     attribution += '&copy; <a class="osm attr" href=' + URLs.OSM_ATTR.link + '>' + URLs.OSM_ATTR.name + '</a>'
 
     return (
@@ -80,13 +80,18 @@ class KVMMap extends Component {
           zoomSnap    = { 1.0 }
           zoomControl = { false }
           className   = "map"
+          attributionControl= { false }
           onMoveend   = { (e) => { onMoveend(this.getMapCoordinates()) }}
           onZoomend   = { (e) => { onZoomend(this.getMapCoordinates()) }}
           onClick     = { (e) => { onClick(e) }} >
+          
+          <AttributionControl prefix={false} />
+          <ZoomControl position="bottomright"  />
 
           <TileLayer
             url = { URLs.TILE_SERVER.link }
             attribution = { attribution }
+            prefix= ''
           />
 
           <MarkerLayer

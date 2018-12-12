@@ -25,7 +25,7 @@ class TransitionStart extends Component {
           <EntryDetailPage>
             <header>
               <img src="https://transition-muc.de/wp-content/uploads/2018/05/map@2x-150x150.png" />
-              <h1>Transition Map Prototyp</h1>
+              <h1>Transition Map<br/> Prototyp</h1>
             </header>
             <br/><hr/>
             <p>Schön das du da bist und schön, dass es so viele tolle Projekte und Läden gibt in dieser Stadt!</p>
@@ -39,11 +39,20 @@ class TransitionStart extends Component {
               </ul>              
             </p> 
             <hr/><br/>
-            <p>Wir sind noch fleißig am testen und zusammen mit der <a href="http://kartevonmorgen.org/">Karte Von Morgen</a> am weiterentwickeln.</p>
+            <p>Wir sind noch fleißig am testen und zusammen mit der <a href="http://kartevonmorgen.org/" target="_blank">Karte Von Morgen</a> am weiterentwickeln.</p>
             <p><i>Wenn du Probleme hast</i> oder dir ein Feature fehlt – Meld dich gern bei <a href="mailto:botho@serlo.org">Botho</a>. </p>
             <p><i>Wenn dir ein Eintrag fehlt:</i><br/><a href="#" onClick = {(e) => { e.preventDefault(); this.props.dispatch(Actions.showNewEntry()) }}>Leg ihn gerne an</a>, Vielen Dank!</p>
             <p><b>Viel Spaß beim testen!</b></p>
-            
+            <br/>
+            <div style={{marginTop:'3rem', opacity:0.8, fontSize:'0.75rem', marginBottom:'5rem'}}>
+              <hr/>
+              <ul>
+                <li>Zur <a href="https://transition-muc.de" target="_blank">Webseite von Transition München</a></li>
+                <li>Zum <a href="https://munich.impacthub.net/impressum/" target="_blank">Impressum</a></li>
+                <li>Für die Nutzung der Karte gilt die Datenschutzerklärung der <a href="https://www.kartevonmorgen.org" target="_blank">Karte Von Morgen</a></li>
+              </ul>
+            </div>
+
           </EntryDetailPage>
         </div>
       </div>
