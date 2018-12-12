@@ -3,9 +3,18 @@ import styled from "styled-components";
 import STYLE from "./styling/Variables"
 import { pure } from "recompose";
 import Actions from "../Actions";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Tag from "./Tags/Tag"
 
 class TransitionStart extends Component {
+
+
+  _onClick(e) {
+    e.preventDefault();
+    this.props.dispatch(Actions.showSearchResults());
+    this.props.dispatch(Actions.setSearchText(e.target.innerText || e.target.textContent));
+    return this.props.dispatch(Actions.search());
+  }
 
   render(){
 
@@ -20,16 +29,14 @@ class TransitionStart extends Component {
             </header>
             <br/><hr/>
             <p>Schön das du da bist und schön, dass es so viele tolle Projekte und Läden gibt in dieser Stadt!</p>
-            <p>Suchst du z.B. einen <a onClick={ (e) => {e.preventDefault();
-              this.props.dispatch(Actions.showSearchResults());
-              this.props.dispatch(Actions.setSearchText('#verpackungsfrei'));
-              return this.props.dispatch(Actions.search());
-            }} href="#" >verpackungsfreien Laden</a>?
-            Oder interessierst du dich für <a onClick={ (e) => { e.preventDefault();
-              this.props.dispatch(Actions.showSearchResults());
-              this.props.dispatch(Actions.setSearchText('#bienen'));
-              return this.props.dispatch(Actions.search());
-            }}href="#" >Bienen</a>? 
+            <p>
+              
+              <ul>
+                <li>Suchst du einen <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="secondhandladen"/>?</li>
+                <li>Toaster kaputt? Ab zum <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="repaircafe"/></li>
+                <li>Zu viel Plastik in deinem Leben? Hier gibt's Dinge auch <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "verpackungsfrei" /></li>
+                <li>Nur ein kleiner Umzug? Hier gibt's kostenlose <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "lastenradverleih" /></li>
+              </ul>              
             </p> 
             <hr/><br/>
             <p>Wir sind noch fleißig am testen und zusammen mit der <a href="http://kartevonmorgen.org/">Karte Von Morgen</a> am weiterentwickeln.</p>
@@ -67,6 +74,13 @@ a {
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+a.tag {
+  font-size: 1rem;
+  &:hover {
+    text-decoration: none;
   }
 }
 
