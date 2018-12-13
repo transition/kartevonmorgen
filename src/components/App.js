@@ -251,7 +251,7 @@ class Main extends Component {
                 if(event.originalEvent.srcElement.tagName.toLowerCase() === 'path') return false;
                 
                 //back to overview
-                if(view.left !== V.START)
+                if(view.left === V.ENTRY)
                 {
                   dispatch(Actions.setCurrentEntry(null, null));
                   dispatch(Actions.showSearchResults());
