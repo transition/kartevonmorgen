@@ -49,7 +49,7 @@ class Main extends Component {
 
   componentDidMount(){
     document.addEventListener("keydown", (e) => this.escFunction(e), false)
-    this.props.dispatch(Actions.showStart())
+    if(this.props.view.left === V.RESULT) this.props.dispatch(Actions.showStart())
     this.props.dispatch(Actions.getAllTags())
   }
 
@@ -73,7 +73,7 @@ class Main extends Component {
     const { explainRatingContext, selectedContext } = view;
 
     if (url.hash !== window.location.hash) {
-      console.log("URL CHANGE FROM APP: " + window.location.hash + " --> " + url.hash);
+      // console.log("URL CHANGE FROM APP: " + window.location.hash + " --> " + url.hash);
       window.history.pushState(null, null, window.location.pathname + url.hash);
     }
     
