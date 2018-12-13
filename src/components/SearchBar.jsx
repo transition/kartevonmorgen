@@ -88,7 +88,13 @@ class SearchBar extends React.Component {
                 width={17}
                 thickness={3}
                 pColor={STYLE.darkGray}
-                sColor="white"/>
+                sColor="white"
+                onClick={()=>{ 
+                  if(start) return dispatch(Actions.showResultList());
+                  dispatch(Actions.setSearchText(''));
+                  return dispatch(Actions.showStart());
+                }}
+              />
               : <button onClick={()=>{ 
                 if(start) return dispatch(Actions.showResultList());
                 dispatch(Actions.setSearchText(''));
