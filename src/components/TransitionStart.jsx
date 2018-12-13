@@ -29,15 +29,12 @@ class TransitionStart extends Component {
             </header>
             <br/><hr/>
             <p>Schön das du da bist und schön, dass es so viele tolle Projekte und Läden gibt in dieser Stadt!</p>
-            <p>
-              
-              <ul>
-                <li>Suchst du einen <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="secondhandladen"/>?</li>
-                <li>Toaster kaputt? Ab zum <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="repaircafe"/></li>
-                <li>Zu viel Plastik in deinem Leben? Hier gibt's Dinge auch <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "verpackungsfrei" /></li>
-                <li>Nur ein kleiner Umzug? Hier gibt's kostenlose <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "lastenradverleih" /></li>
-              </ul>              
-            </p> 
+            <ul>
+              <li>Suchst du einen <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="secondhandladen"/>?</li>
+              <li>Toaster kaputt? Ab zum <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="repaircafe"/></li>
+              <li>Zu viel Plastik in deinem Leben? Hier gibt's Dinge auch <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "verpackungsfrei" /></li>
+              <li>Nur ein kleiner Umzug? Hier gibt's kostenlose <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "lastenradverleih" /></li>
+            </ul>              
             <hr/><br/>
             <p>Wir sind noch fleißig am testen und zusammen mit der <a href="http://kartevonmorgen.org/" target="_blank">Karte Von Morgen</a> am weiterentwickeln.</p>
             <p><i>Wenn du Probleme hast</i> oder dir ein Feature fehlt – Meld dich gern bei <a href="mailto:botho@serlo.org">Botho</a>. </p>

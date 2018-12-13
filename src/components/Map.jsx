@@ -91,18 +91,19 @@ class KVMMap extends Component {
           zoomSnap    = { 1.0 }
           zoomControl = { false }
           className   = "map"
-          attributionControl= { false }
+          attributionControl= "false"
           onMoveend   = { () => { this._onMoveend() }}
           onZoomend   = { () => { this._onZoomend() }}
           onClick     = { (e) => { onClick(e) }} >
           
-          <AttributionControl prefix={false} />
+          <AttributionControl prefix="false" />
           <ZoomControl position="bottomright"  />
 
           <TileLayer
             url = { URLs.TILE_SERVER.link }
             attribution = { attribution }
-            prefix= ''
+            tileSize= { 512 }
+            zoomOffset= { -1 }
           />
 
           <MarkerLayer
