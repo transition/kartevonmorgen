@@ -14,7 +14,7 @@ import Tag from "./Tags/Tag"
 const Tags = (tags=[], dispatch) =>
   <TagsWrapper key="tags">
     <TagList>
-    { tags
+      { tags
         .filter(t => t != "")
         .map( (t,index) =>
           <TagListElem key={"Tag"+t}><Tag
@@ -127,7 +127,7 @@ class BusinessCard extends Component {
                 <div key="route">
                   <FontAwesomeIconElement icon="route" />
                   { this.getRoutePlannerLink() }
-              </div></div>
+                </div></div>
               : null),
             (entry.tags && entry.tags.filter(t => t !="").length > 0
               ? Tags(entry.tags, dispatch)
@@ -158,7 +158,7 @@ const EntryDetailPage = styled.div`
   position: relative;
   max-width: 500px;
   background-color: #fff;
-  margin: ${props => props.hasImage ? "270px" : "0px"} 1.8em 0 1.8em;
+  margin: ${props => props.hasImage ? "2rem" : "0px"} 1.8em 0 1.8em;
 `;
 
 const LoadingEntryMessage = styled.div`

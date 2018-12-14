@@ -3,38 +3,47 @@ import PropTypes              from "prop-types"
 import styled                 from "styled-components"
 
 const ImageWrapper = styled.div`
-  position:   absolute;
-  top:        0;
-  bottom:     0;
-  width:      100%;
-  height:     285px;
-  text-align: center;
-  z-index:    0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: -2.6rem;
+  width: 100%;
+  min-height: 13rem;
+  
+  z-index: 0;
+  border-bottom: 1px solid #ddd;
 `;
 
-const Image = styled.div`
-  height:     285px;
+const Image = styled.img`
+  width: 100%;
   max-width:  100%;
-  background-position: center center !important;
-  background-size: auto 100% !important;
+  max-height: 20rem;
 `;
 
 class EntryImage extends Component {
+
+  _onLoad(e) {
+    const img = e.target;
+    const natural = img.naturalWidth / img.naturalHeight;
+    const client = img.clientWidth / img.clientHeight;
+    
+    if( (img.naturalWidth / img.clientWidth) < 0.8 || Math.abs(natural-client) > 0.1 ) {
+      img.style.width = "auto";
+    }
+  }
+
   render(){
     const { image_url, image_link_url } = this.props;
-
-    const backgroundImageStyle = {
-      background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 15%, rgba(0,0,0,0) 30%), url(" + image_url + ") no-repeat",
-    };
 
     return (
       <ImageWrapper>
         { image_link_url ?
           <a href={ image_link_url } target="_blank">
-            <Image src={image_url} style={ backgroundImageStyle }></Image>
+            <Image src={image_url} onLoad={(e) => { this._onLoad(e) }}></Image>
           </a>
           :
-          <Image src={image_url} style={ backgroundImageStyle }></Image>
+          <Image src={image_url} onLoad={(e) => { this._onLoad(e) }}></Image>
         }
       </ImageWrapper>
     );

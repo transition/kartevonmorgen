@@ -14,6 +14,7 @@ const LoadingEntryMessage = styled.div`
 const Navbar = styled.nav`
   position: relative;
   z-index: 1;
+  background: ${props => props.hasImage ? "linear-gradient(to bottom, rgba(0,0,0,0.17) 0%, rgba(0,0,0,0) 100%)" : "none"};
 `;
 
 class EntryDetails extends Component {
@@ -31,7 +32,7 @@ class EntryDetails extends Component {
     else {
       return (
         <div className="entry">
-          <Navbar className="menu-top">
+          <Navbar hasImage={hasImage} className="menu-top">
             <NavButtonWhite
               keyName = "back"
               buttonRight = { false }
