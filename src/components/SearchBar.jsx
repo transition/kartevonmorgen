@@ -95,7 +95,7 @@ class SearchBar extends React.Component {
                   return dispatch(Actions.showStart());
                 }}
               />
-              : <button onClick={()=>{ 
+              : <button title="Zur Einführung" onClick={()=>{ 
                 if(start) return dispatch(Actions.showResultList());
                 dispatch(Actions.setSearchText(''));
                 return dispatch(Actions.showStart());

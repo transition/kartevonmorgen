@@ -28,7 +28,7 @@ class TransitionStart extends Component {
               <h1>Transition Map<br/> Prototyp</h1>
             </header>
             <br/><hr/>
-            <p>Schön das du da bist und schön, dass es so viele tolle Projekte und Läden gibt in dieser Stadt!</p>
+            <p>Schön, dass du da bist und schön, dass es so viele tolle Projekte und Läden gibt in dieser Stadt!</p>
             <ul>
               <li>Suchst du einen <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="secondhandladen"/>?</li>
               <li>Toaster kaputt? Ab zum <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="repaircafe"/></li>
@@ -36,10 +36,10 @@ class TransitionStart extends Component {
               <li>Nur ein kleiner Umzug? Hier gibt's kostenlose <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "lastenradverleih" /></li>
             </ul>              
             <hr/><br/>
-            <p>Wir sind noch fleißig am testen und zusammen mit der <a href="http://kartevonmorgen.org/" target="_blank">Karte Von Morgen</a> am weiterentwickeln.</p>
+            <p>Wir sind noch fleißig am Weiterentwickeln zusammen mit der <a href="http://kartevonmorgen.org/" target="_blank">Karte Von Morgen</a></p>
             <p><i>Wenn du Probleme hast</i> oder dir ein Feature fehlt – Meld dich gern bei <a href="mailto:botho@serlo.org">Botho</a>. </p>
-            <p><i>Wenn dir ein Eintrag fehlt:</i><br/><a href="#" onClick = {(e) => { e.preventDefault(); this.props.dispatch(Actions.showNewEntry()) }}>Leg ihn gerne an</a>, Vielen Dank!</p>
-            <p><b>Viel Spaß beim testen!</b></p>
+            <p><i>Wenn dir ein Eintrag fehlt:</i><br/><a href="#eintrag_eintragen" onClick = {(e) => { e.preventDefault(); this.props.dispatch(Actions.showNewEntry()) }}>Leg ihn gerne an</a>, Vielen Dank!</p>
+            <p><b>Viel Spaß beim <a href="#einträge" onClick={(e)=>{ e.preventDefault(); this.props.dispatch(Actions.showResultList()); }}>Ausprobieren!</a></b></p>
             <br/>
             <div style={{marginTop:'3rem', opacity:0.8, fontSize:'0.75rem', marginBottom:'5rem'}}>
               <hr/>              
