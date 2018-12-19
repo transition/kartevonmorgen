@@ -27,6 +27,11 @@ import styled, { keyframes, createGlobalStyle } from "styled-components";
 import STYLE                from "./styling/Variables"
 import Swipeable from 'react-swipeable'
 
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-120539306-2'); //Unique Google Analytics tracking number UA-120539306-1
+ReactGA.set({ anonymizeIp: true });
+ReactGA.set({ forceSSL: true });
+ReactGA.pageview(window.location.hash);
 
 class Main extends Component {
   

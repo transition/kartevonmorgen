@@ -3,13 +3,19 @@ import GeoLocation                from "../GeoLocation";
 import mapConst                   from "../constants/Map";
 import appConst                   from "../constants/App";
 import serverActions              from "./server";
+import ReactGA from 'react-ga';
 
 const Actions = {
 
-  setSearchText: (txt) => ({
-    type: T.SET_SEARCH_TEXT,
-    payload: txt
-  }),
+  setSearchText: (txt) => {
+    
+    if(txt.length>0) ReactGA.pageview("/#/?search=%23"+txt);
+    
+    return {
+      type: T.SET_SEARCH_TEXT,
+      payload: txt
+    }
+  },
 
   setCitySearchText: (txt) => ({
     type: T.SET_CITY_SEARCH_TEXT,
@@ -129,6 +135,7 @@ const Actions = {
         dispatch(Actions.setZoom(mapConst.ENTRY_DEFAULT_ZOOM));
         dispatch(Actions.setCenter(center));
       }
+      ReactGA.pageview(window.location.hash);
     },
 
   updateStateFromURL: (hash) => {
@@ -168,6 +175,10 @@ const Actions = {
           type: T.OWN_POSITION_RESULT,
           payload: position
         });
+      });
+      ReactGA.event({
+        category: 'Map Navigation',
+        action: 'showOwnPosition Link'
       });
     },
 
