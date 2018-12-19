@@ -8,9 +8,8 @@ import ReactGA from 'react-ga';
 const Actions = {
 
   setSearchText: (txt) => {
-    
-    if(txt.length>0) ReactGA.pageview("/#/?search=%23"+txt);
-    
+    if(txt.length>0) ReactGA.pageview("/#/?search="+txt);
+
     return {
       type: T.SET_SEARCH_TEXT,
       payload: txt
