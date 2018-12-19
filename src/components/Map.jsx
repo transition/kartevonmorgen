@@ -96,7 +96,7 @@ class KVMMap extends Component {
           onZoomend   = { () => { this._onZoomend() }}
           onClick     = { (e) => { onClick(e) }} >
           
-          <AttributionControl prefix={false} />
+          <AttributionControl prefix="" />
           <ZoomControl position="bottomright"  />
 
           <TileLayer
