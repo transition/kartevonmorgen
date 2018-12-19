@@ -91,7 +91,7 @@ class KVMMap extends Component {
           zoomSnap    = { 1.0 }
           zoomControl = { false }
           className   = "map"
-          attributionControl= "false"
+          attributionControl= {false}
           onMoveend   = { () => { this._onMoveend() }}
           onZoomend   = { () => { this._onZoomend() }}
           onClick     = { (e) => { onClick(e) }} >
