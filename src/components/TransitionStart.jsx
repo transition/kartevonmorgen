@@ -31,7 +31,7 @@ class TransitionStart extends Component {
             <p>Schön, dass du da bist und schön, dass es so viele tolle Projekte und Läden gibt in dieser Stadt!</p>
             <ul>
               <li>Suchst du einen <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="secondhandladen"/>?</li>
-              <li>Soll's doch neu sein, aber fair? Hier geht's zu den <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "klamottenläden" /></li>
+              <li>Soll's doch neu sein, aber fair? Hier geht's zu den <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "klamottenladen" /></li>
               <li>Nur ein kleiner Umzug? Kostenlose Ladenräder gibt's im <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "lastenradverleih" /></li>
               {/* <li>Toaster kaputt? Ab zum <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="repaircafe"/></li> */}
               <li>Zu viel Plastik in deinem Leben? Hier kannst du <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "unverpackt" />einkaufen</li>

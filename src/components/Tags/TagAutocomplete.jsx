@@ -45,8 +45,8 @@ const MultiTagContainer = (props) => {
 };
 
 const defaultTags = [{
-  "value": "klamottenläden",
-  "label": "klamottenläden",
+  "value": "klamottenladen",
+  "label": "klamottenladen",
   "type": "tag"
 },{
   "value": "secondhandladen",
