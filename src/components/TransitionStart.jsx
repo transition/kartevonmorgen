@@ -31,12 +31,13 @@ class TransitionStart extends Component {
             <p>Schön, dass du da bist und schön, dass es so viele tolle Projekte und Läden gibt in dieser Stadt!</p>
             <ul>
               <li>Suchst du einen <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="secondhandladen"/>?</li>
-              <li>Toaster kaputt? Ab zum <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="repaircafe"/></li>
-              <li>Zu viel Plastik in deinem Leben? Hier gibt's Dinge auch <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "verpackungsfrei" /></li>
-              <li>Nur ein kleiner Umzug? Hier gibt's kostenlose <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "lastenradverleih" /></li>
+              <li>Soll's doch neu sein, aber fair? Hier geht's zu den <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "klamottenläden" /></li>
+              <li>Nur ein kleiner Umzug? Kostenlose Ladenräder gibt's im <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "lastenradverleih" /></li>
+              {/* <li>Toaster kaputt? Ab zum <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="repaircafe"/></li> */}
+              <li>Zu viel Plastik in deinem Leben? Hier kannst du <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "unverpackt" />einkaufen</li>
             </ul>              
             <hr/><br/>
-            <p>Wir sind noch fleißig am Weiterentwickeln zusammen mit der <a href="http://kartevonmorgen.org/" target="_blank">Karte Von Morgen</a></p>
+            <p>Wir sind noch fleißig am Weiterentwickeln zusammen mit der <a href="http://kartevonmorgen.org/" target="_blank">Karte Von Morgen</a>.</p>
             <p><i>Wenn du Probleme hast</i> oder dir ein Feature fehlt – Meld dich gern bei <a href="mailto:botho@serlo.org">Botho</a>. </p>
             <p><i>Wenn dir ein Eintrag fehlt:</i><br/><a href="#eintrag_eintragen" onClick = {(e) => { e.preventDefault(); this.props.dispatch(Actions.showNewEntry()) }}>Leg ihn gerne an</a>, Vielen Dank!</p>
             <p><b>Viel Spaß beim <a href="#einträge" onClick={(e)=>{ e.preventDefault(); this.props.dispatch(Actions.showResultList()); }}>Ausprobieren!</a></b></p>

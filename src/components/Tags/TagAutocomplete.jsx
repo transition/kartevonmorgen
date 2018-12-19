@@ -45,24 +45,24 @@ const MultiTagContainer = (props) => {
 };
 
 const defaultTags = [{
-  "value": "restaurant",
-  "label": "restaurant",
+  "value": "klamottenläden",
+  "label": "klamottenläden",
   "type": "tag"
 },{
-  "value": "klamotten",
-  "label": "klamotten",
+  "value": "secondhandladen",
+  "label": "secondhandladen",
+  "type": "tag"
+},{
+  "value": "lastenradverleih",
+  "label": "lastenradverleih",
+  "type": "tag"
+},{
+  "value": "unverpackt",
+  "label": "unverpackt",
   "type": "tag"
 },{
   "value": "stadtrundgang",
   "label": "stadtrundgang",
-  "type": "tag"
-},{
-  "value": "umwelt",
-  "label": "umwelt",
-  "type": "tag"
-},{
-  "value": "lastenrad",
-  "label": "lastenrad",
   "type": "tag"
 }
 ]
