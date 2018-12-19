@@ -112,12 +112,12 @@ class TagAutocomplete extends Component {
         __isNew__: true,
         type: "search"
       })
-      output.push({
-        label: this.props.t("searchbar.placesPlaceholder"),
-        value: " " + input,
-        __isNew__: true,
-        type: "place"
-      })
+      // output.push({
+      //   label: this.props.t("searchbar.placesPlaceholder"),
+      //   value: " " + input,
+      //   __isNew__: true,
+      //   type: "place"
+      // })
     }
     
     output.push(
