@@ -43,7 +43,7 @@ class Main extends Component {
       if(view.left === V.ENTRY) {
         dispatch(Actions.setCurrentEntry(null, null));
         dispatch(Actions.showSearchResults());
-        return dispatch(Actions.se^tCenterInUrl(this.props.map.mapCenter));
+        return dispatch(Actions.setCenterInUrl(this.props.map.mapCenter));
       }
       if(view.left === V.RESULT){
         dispatch(Actions.setSearchText(''))
@@ -54,7 +54,7 @@ class Main extends Component {
 
   componentDidMount(){
     document.addEventListener("keydown", (e) => this.escFunction(e), false)
-    if(this.props.view.left === V.RESULT && this.props.search === "") this.props.dispatch(Actions.showStart())
+    if(this.props.view.left === V.RESULT) this.props.dispatch(Actions.showStart())
     this.props.dispatch(Actions.getAllTags())
   }
 
