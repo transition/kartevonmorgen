@@ -11,10 +11,20 @@ if (__DEVELOPMENT__) {
 }
 
 // https://github.com/zalmoxisus/redux-devtools-extension
-const createStoreWrapper =
-  window.devToolsExtension ? window.devToolsExtension(createStore) : createStore;
+const composeEnhancers =
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+      trace: true,
+    }) : compose;
 
-const store = applyMiddleware.apply(null,middlewares)(createStoreWrapper)(reducers);
+const enhancer = composeEnhancers(
+  applyMiddleware(...middlewares),
+  // other store enhancers if any
+);
+
+const store = createStore(reducers, enhancer);
 
 if (module.hot) {
   // Enable Webpack hot module replacement for reducers
