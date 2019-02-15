@@ -1,16 +1,15 @@
 import React, { Component,PureComponent }         from "react"
-import { Map, TileLayer, Marker, CircleMarker, Tooltip, AttributionControl, ZoomControl }   from "react-leaflet"
+import { Map, TileLayer, AttributionControl, ZoomControl }   from "react-leaflet"
 import URLs                         from "../constants/URLs"
 import { pure }                     from "recompose"
 import { IDS }                      from  "../constants/Categories"
 import STYLE                        from "./styling/Variables"
-import { avg_rating_for_entry }     from "../rating"
 import styled                       from "styled-components";
 import T                            from "prop-types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import L from 'leaflet'
 import { translate }          from "react-i18next";
-import { NAMES }    from "../constants/Categories"
+import MarkerLayer from './Map/MarkerLayer';
 
 const { INITIATIVE, EVENT, COMPANY } = IDS;
 import  "leaflet/dist/leaflet.css"
@@ -67,10 +66,8 @@ class KVMMap extends Component {
       entries,
       center,
       zoom,
-      marker,
       onClick,
       onMarkerClick,
-      ratings,
       showLocateButton,
       highlight
     } = this.props;
@@ -107,12 +104,10 @@ class KVMMap extends Component {
           />
 
           <MarkerLayer
-            entries = { entries }
-            ratings = { ratings }
-            highlight = { highlight }
-            onMarkerClick = { onMarkerClick }
-            marker = { marker }
-            zoom = { zoom }
+            entries={entries}
+            highlight={highlight}
+            onMarkerClick={onMarkerClick}
+            zoom={zoom}
           />
 
         </Map>
@@ -136,11 +131,9 @@ class KVMMap extends Component {
 
 KVMMap.propTypes = {
   entries       : T.array,
-  ratings       : T.object,
   highlight     : T.array,
   center        : T.object,
   zoom          : T.number,
-  marker        : T.object,
   onClick       : T.func,
   onMoveend     : T.func,
   onZoomend     : T.func,
@@ -150,147 +143,6 @@ KVMMap.propTypes = {
 };
 
 module.exports = pure(KVMMap);
-
-
-
-class MarkerLayer extends PureComponent {
-
-  getCategoryColorById(id){
-    switch (id) {
-      case INITIATIVE:
-        return STYLE.initiative;
-      case EVENT:
-        return STYLE.event;
-      case COMPANY:
-        return STYLE.company;
-      default:
-        return STYLE.otherCategory;
-    }
-  }
-
-  getIcon(size) {
-    const helper = size/2
-
-    return new L.Icon({
-      iconUrl: require('../img/marker.svg'),
-      iconRetinaUrl: require('../img/marker.svg'),
-      iconSize: [size, size]
-      // ??? iconAnchor: [helper, size],
-      // popupAnchor: [0, 100]
-    });
-  }
-
-
-  render() {
-
-    let markersArray = []
-    //return markersArray;
-    const { entries, ratings, highlight, onMarkerClick, marker, zoom } = this.props
-    const markerSize = 12+ (zoom-9)*4
-
-    if (entries && entries.length > 0 ) {
-      entries.forEach(e => {
-        let avg_rating = null;
-
-        const isHighlight = highlight.length > 0 && highlight.indexOf(e.id) == 0
-
-        if(e.ratings.length > 0 && Object.keys(ratings).length > 0){
-          const ratings_for_entry = (e.ratings || []).map(id => ratings[id]);
-          avg_rating = avg_rating_for_entry(ratings_for_entry);
-        }
-
-        if(e.ratings.length > 0 && avg_rating && avg_rating > 0){
-          let opacity = 0.5;
-          if(highlight.indexOf(e.id) == 0 || highlight.length == 0) opacity = 1;
-
-          
-          markersArray.push(
-            <Marker
-              key       = { e.id }
-              onClick   = { () => { onMarkerClick(e.id) }}
-              position  = {{ lat: e.lat, lng: e.lng }}
-              icon      = { this.getIcon(markerSize) }
-              opacity   = { opacity }
-            >
-              { !isHighlight ? <LongTooltip entry={ e } offset={20} /> : null }
-            </Marker>
-          );
-        } else {
-          // to make clicking the circle easier add a larger circle with 0 opacity:
-
-          let opacity = 0.5;
-          if(highlight.indexOf(e.id) == 0 || highlight.length == 0) opacity = 1;
-
-          const circleSize = markerSize/4
-
-          markersArray.push(
-            <CircleMarker
-              onClick   = { () => { onMarkerClick(e.id) }}
-              key       = { e.id }
-              center    = {{ lat: e.lat, lng: e.lng }}
-              opacity   = { 1 }
-              radius    = { circleSize }
-              color     = { "#fff" }
-              weight    = { 0.7 }
-              fillColor = { this.getCategoryColorById(e.categories[0]) }
-              fillOpacity = { opacity }
-            > 
-              { !isHighlight ? <LongTooltip entry={ e } offset={8} /> : null }
-            </CircleMarker>
-          );
-        }
-
-        if(isHighlight){
-
-          markersArray.push(
-            <CircleMarker
-              onClick   = { () => { onMarkerClick(e.id) }}
-              key       = { e.id + "-highlight"}
-              center    = {{ lat: e.lat, lng: e.lng }}
-              opacity   = { 0 }
-              fillOpacity = { 0 }
-            > 
-              <SmallTooltip permanent={true} direction='bottom' offset={[0, 20]}><h3>{e.title}</h3></SmallTooltip>
-            </CircleMarker>);
-        }
-      });
-    }  
-    return(
-      <React.Fragment>
-        { markersArray }
-        { marker
-          ? <Marker position = { marker } icon = { this.getIcon(40) } />
-          : null
-        }
-      </React.Fragment>
-    )
-  }
-}
-
-class _LongTooltip extends Component {
-
-
-  render() {
-    const { entry, t, offset } = this.props
-    let desc = entry.description;
-    if(desc.length > 110) desc = desc.substring(0,91 + desc.substring(90).indexOf(".") ) + ' …'
-    if(desc.length > 120) desc = desc.substring(0,91 + desc.substring(90).indexOf(" ") ) + ' …'
-  
-     
-    return(
-      <SmallTooltip long={true} direction='bottom' offset={[0, offset]}>
-        <React.Fragment>
-          <span>{t("category." + NAMES[entry.categories && entry.categories[0]])}</span>
-          <h3>{entry.title}</h3>
-          <p>{desc}</p>
-        </React.Fragment>
-      </SmallTooltip>            
-    )
-  }
-}
-
-const LongTooltip = translate('translation')(pure(_LongTooltip))
-
 
 const Wrapper = styled.div`
 
@@ -336,26 +188,3 @@ const LocateIcon = styled(FontAwesomeIcon)`
   width: 12px;
   height: 12px;
 `;
-
-const SmallTooltip = styled(Tooltip)`
-  
-  ${props => props.long && `
-    white-space: normal !important;
-    hyphens: auto;
-  `}
-  > span {
-    color: ${ STYLE.initiative };
-    font-size: 0.67rem;
-    text-transform: uppercase;
-  }
-  > h3 {
-    font-weight: bold;
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    font-size: 0.75rem;
-    ${props => props.long && `
-      min-width: 12rem;
-    `}
-  }
-`

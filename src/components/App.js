@@ -26,6 +26,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled, { keyframes, createGlobalStyle } from "styled-components";
 import STYLE                from "./styling/Variables"
 import Swipeable from 'react-swipeable'
+import Loader from './Loader/Loader';
 
 import ReactGA from 'react-ga';
 ReactGA.initialize('UA-120539306-2'); //Unique Google Analytics tracking number UA-120539306-1
@@ -82,7 +83,7 @@ class Main extends Component {
       window.history.pushState(null, null, window.location.pathname + url.hash);
     }
     
-    const resultEntries = search.result.filter(e => entries[e.id]).map(e => entries[e.id]);
+    const entriesArray = search.result.filter(e => entries[e.id]).map(e => entries[e.id]);
     const mapCenter = map.center;
     const loggedIn = user.username ? true : false;
     
@@ -195,7 +196,7 @@ class Main extends Component {
                     return dispatch(Actions.setSearchText(''));
                   }}
                   onEnter={ () => {}}      // currently not used, TODO
-                  loading={ server.loadingSearch }
+                  loading={ server.loadingSearch || server.entriesLoading }
                 />
               </div>
 
@@ -207,7 +208,7 @@ class Main extends Component {
                   user={ user }
                   form={ form }
                   entries={entries}
-                  resultEntries={ resultEntries }
+                  entriesArray={ entriesArray }
                   ratings={ ratings }
                   // LeftPanelentries={ server.entries } never used…?
                   dispatch={ dispatch }
@@ -244,14 +245,13 @@ class Main extends Component {
           </RightPanel>  */}
 
           <Swipeable onSwipedRight={ (e, deltaX) => this.swipedRightOnMap(e, deltaX) } className="center">
+            <Loader loading={ server.loadingSearch || server.entriesLoading }></Loader>
             <Map
-              marker={ (view.left === V.EDIT || view.left === V.NEW) ? map.marker : null}
               highlight={ search.highlight }
               center={ mapCenter}
               zoom={ map.zoom}
               category={ form[EDIT.id] ? form[EDIT.id].category ? form[EDIT.id].category.value : null : null}
-              entries={ resultEntries}
-              ratings={ ratings}
+              entries={entriesArray}
               onClick={ (event) => {
                 if(event.originalEvent.srcElement.tagName.toLowerCase() === 'path') return false;
                 
@@ -266,10 +266,11 @@ class Main extends Component {
                 dispatch(Actions.hideLeftPanelOnMobile());
                 return dispatch(Actions.setMarker(event.latlng));
               }}
-              onMarkerClick={ id => {
-                if(view.left === V.EDIT || view.left === V.NEW) return false;
-                dispatch(Actions.setCurrentEntry(id, null)); 
-                return dispatch(Actions.showLeftPanel()); 
+              onMarkerClick={markerId => {
+                console.log(markerId, view.left === V.EDIT || view.left === V.NEW, view.left,V.EDIT,view.left,V.NEW)
+                if (view.left === V.EDIT || view.left === V.NEW) return false;
+                dispatch(Actions.setCurrentEntry(markerId, null));
+                dispatch(Actions.showLeftPanel());
               }}
               onMoveend={ coordinates => { return dispatch(Actions.onMoveend(coordinates, map.center)); }}
               onZoomend={ coordinates => { return dispatch(Actions.onZoomend(coordinates, map.zoom)); }}
@@ -323,6 +324,7 @@ const fadein = keyframes`
 `
 
 import pincloud from "../img/pincloud.png";
+import store from "../Store";
 
 
 const MainWrapper = styled.div `

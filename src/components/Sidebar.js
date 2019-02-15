@@ -29,7 +29,7 @@ class Sidebar extends Component {
     if (nextProps.view.left !== this.props.view.left) return true
     if( nextProps.view.left === this.props.view.left === V.ENTRY && nextProps.search.highlight === this.props.search.highlight ) return false
     if( nextProps.view.left === V.RESULT
-        && Object.keys(nextProps.resultEntries).join() === Object.keys(this.props.resultEntries).join()
+        && Object.keys(nextProps.entriesArray).join() === Object.keys(this.props.entriesArray).join()
         && Object.keys(nextProps.search.invisible).join() === Object.keys(this.props.search.invisible).join()
         && Object.keys(nextProps.ratings).join() === Object.keys(this.props.ratings).join()
     ) return false
@@ -52,7 +52,7 @@ class Sidebar extends Component {
   }
 
   render(){
-    const { view, search, user, resultEntries, entries,
+    const { view, search, user, entriesArray, entries,
       ratings, dispatch, map, form, t } = this.props;
     const { waiting_for_search_results } = view;
     const { explainRatingContext, selectedContext } = view;
@@ -79,7 +79,7 @@ class Sidebar extends Component {
           <ResultWrapper className="result">
             <ResultList
               waiting={ waiting_for_search_results }
-              entries={ resultEntries }
+              entries={ entriesArray }
               ratings={ ratings }
               highlight={ search.highlight}
               moreEntriesAvailable={ search.moreEntriesAvailable }
@@ -318,7 +318,7 @@ Sidebar.propTypes = {
   map:            PropTypes.object.isRequired,
   user:           PropTypes.object.isRequired,
   form:           PropTypes.object.isRequired,
-  resultEntries:  PropTypes.array.isRequired,
+  entriesArray:   PropTypes.array.isRequired,
   entries:        PropTypes.object.isRequired,
   ratings:        PropTypes.object.isRequired,
   dispatch:       PropTypes.func.isRequired,

@@ -11,6 +11,7 @@ import LICENSES                   from "../constants/Licenses";
 import { MAIN_IDS, IDS }          from "../constants/Categories";
 import i18n                       from "../i18n";
 import { notify }                 from "reapop";
+import Logger from '../util/Logger';
 
 const flatten = nestedArray => nestedArray.reduce(
   (a, next) => a.concat(Array.isArray(next) ? flatten(next) : next), []
@@ -39,7 +40,7 @@ const Actions = {
           type: T.SET_SEARCH_TIME,
           payload: null
         });
-        console.log("SEARCH\n");
+        Logger.log('[SEARCH] Starting...');
         const { search, map } = getState();
         var cats = search.categories;
         const sw = map.bbox._southWest;
@@ -125,28 +126,38 @@ const Actions = {
       });
     },
 
-  getEntries: (ids = []) =>
+  getEntries: (visibleEntryIds = []) =>
     (dispatch, getState) => {
+      dispatch({
+        type: T.ENTRIES_LOADING,
+      });
       let {
         fetchedAllEntries,
         moreEntriesAvailable
       } = getState().search;
       dispatch({
         type: T.SET_MORE_ENTRIES_AVAILABLE,
-        payload: !fetchedAllEntries && (ids.length > ServerConstants.NUM_ENTRIES_TO_FETCH)
+        payload: !fetchedAllEntries && (visibleEntryIds.length > ServerConstants.NUM_ENTRIES_TO_FETCH)
       });
-      ids = ids.slice(0, ServerConstants.NUM_ENTRIES_TO_FETCH);
+      // ids = ids.slice(0, ServerConstants.NUM_ENTRIES_TO_FETCH);
 
-      const entries = getState().server.entries;
-      const fetch_ids_entries = ids.filter((x) => entries[x] == null);
-      if (fetch_ids_entries.length > 0) {
-        WebAPI.getEntries(ids, (err, res) => {
+      const allStoredEntries = getState().server.entries;
+      // Only get ids that haven't been loaded before
+      const entryIdsToBeFetched = visibleEntryIds.filter((x) => allStoredEntries[x] == null);
+      Logger.log('[STORE] Requested items:', Object.keys(visibleEntryIds).length, 'New:', entryIdsToBeFetched.length)
+      // If there are new ones to be fetched
+      if (entryIdsToBeFetched.length > 0) {
+        WebAPI.getEntries(entryIdsToBeFetched, (err, res) => {
+          Logger.log('[API] Loading items:', entryIdsToBeFetched.length, 'Received:', Object.keys(res).length)
           dispatch({
             type: T.ENTRIES_RESULT,
             payload: err || res,
             error: err != null
           });
           if (!err) {
+            dispatch({
+              type: T.ENTRIES_LOADED,
+            });
             const {
               ratings
             } = getState().server;
@@ -158,12 +169,9 @@ const Actions = {
           }
         });
       } else {
-        const entr = Object.keys(entries).map((key) => entries[key])
         dispatch({
-          type: T.ENTRIES_RESULT,
-          payload: entr.filter((e) => ids.includes(e.id)),
-          error: false
-        })
+          type: T.ENTRIES_LOADED,
+        });
       }
     },
 
@@ -193,7 +201,7 @@ const Actions = {
     (dispatch) => {
       WebAPI.getAllTags((err,res) => {
         if (err) {
-          console.error(err);
+          Logger.error('[GET ALL TAGS]', err);
         }
         if (res.body) {
           let options = []
@@ -349,7 +357,7 @@ const Actions = {
               lat: currentEntry.lat,
               lng: currentEntry.lng
             }
-            console.log("\n\nSET ADDRESS FROM MARKER\n\n", latlng);
+            Logger.log('[ENTRY EDIT] Set address from marker', latlng);
             dispatch(Actions.setMarker(latlng));
           }
         } else {
