@@ -459,7 +459,7 @@
 	},
 	"transition": {
 		"name": "Transition München",
-		"partnerTag": "bekleidung",
+		"partnerTag": "mehrwert-partner",
 		"link": "https://transition-muc.de/",
 		"teaserDiscount": "Mitglieder von <a href=\"https://transition-muc.de/\" target=\"_blank\">Transition München</a> erhalten 5% Ermäßigung auf jeden Einkauf."
 	}
