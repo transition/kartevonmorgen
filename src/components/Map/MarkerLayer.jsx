@@ -122,7 +122,6 @@ class MarkerLayer extends PureComponent {
     // If highlight changed
     else if (!isEqual(prevProps.highlight, this.props.highlight)) {
       const {highlight} = this.props;
-      console.log('change', highlight)
       this.updateMarkerHighlight(highlight);
     }
   }
