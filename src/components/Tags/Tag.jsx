@@ -1,13 +1,10 @@
-import React, {Component} from "react";
 import styled from "styled-components";
-import {pure} from "recompose";
 import STYLE from "../styling/Variables";
 import T from "prop-types";
-import { translate } from "react-i18next"
 
 const Tag = props => {
   const {onClick, text, clickable, quotes, t} = props;
-  const className = text === translate('transition.partnerTag') ? 'tag highlight' : 'tag';
+  const className = text === t('transition.partnerTag') ? 'tag highlight' : 'tag';
 
   return (
     <TagLink
