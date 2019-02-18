@@ -25,7 +25,7 @@ const TagOption = (props) => {
       { !isTag ? <FontAwesomeIcon icon={icon} /> : null }
       
       { isTag
-        ? <Tag clickable={true} text={props.data.value} />
+        ? <Tag clickable={true} text={props.data.value} t={props.selectProps.t} />
         : <a>{props.data.label}</a>
       }
     </_TagOption>
@@ -39,8 +39,8 @@ const MultiTagContainer = (props) => {
 
   return (
     isTag
-      ? <Tag {...props} clickable={false} text={props.data.value} />
-      : <Tag {...props} clickable={false} text={props.data.value} quotes={true}/>
+      ? <Tag {...props} clickable={false} text={props.data.value} t={props.selectProps.t} />
+      : <Tag {...props} clickable={false} text={props.data.value} t={props.selectProps.t} quotes={true}/>
   );
 };
 

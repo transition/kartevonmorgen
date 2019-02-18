@@ -17,6 +17,7 @@ class TransitionStart extends Component {
   }
 
   render(){
+    const { t } = this.props;
 
     return(
       <div className="content">
@@ -30,11 +31,11 @@ class TransitionStart extends Component {
             <br/><hr/>
             <p>Schön, dass du da bist und schön, dass es so viele tolle Projekte und Läden gibt in dieser Stadt!</p>
             <ul>
-              <li>Suchst du einen <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="secondhandladen"/>?</li>
-              <li>Soll's doch neu sein, aber fair? Hier geht's zu den <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "klamottenladen" /></li>
-              <li>Nur ein kleiner Umzug? Kostenlose Ladenräder gibt's im <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "lastenradverleih" /></li>
-              {/* <li>Toaster kaputt? Ab zum <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="repaircafe"/></li> */}
-              <li>Zu viel Plastik in deinem Leben? Hier kannst du <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "unverpackt" />einkaufen</li>
+              <li>Suchst du einen <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="secondhandladen" t={t}/>?</li>
+              <li>Soll's doch neu sein, aber fair? Hier geht's zu den <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "klamottenladen" t={t}/></li>
+              <li>Nur ein kleiner Umzug? Kostenlose Ladenräder gibt's im <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "lastenradverleih" t={t}/></li>
+              {/* <li>Toaster kaputt? Ab zum <Tag clickable={ true } onClick={(e) => this._onClick(e)} text="repaircafe" t={t}/></li> */}
+              <li>Zu viel Plastik in deinem Leben? Hier kannst du <Tag clickable={ true } onClick={(e) => this._onClick(e)} text = "unverpackt" t={t}/>einkaufen</li>
             </ul>              
             <hr/><br/>
             <p>Wir sind noch fleißig am Weiterentwickeln zusammen mit der <a href="http://kartevonmorgen.org/" target="_blank">Karte Von Morgen</a>.</p>

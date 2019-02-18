@@ -12,6 +12,7 @@ const lightGray  = "rgb(221,  221,  221)";
 const teal       = "rgb(0,    152,  137)";
 const yellowText = "rgb(214,  201,  0  )";
 const transitionOrange = "rgb(198, 102, 102)";
+const transitionOrangeDark = "rgb(153, 42, 42)";
 
 const rating_contexts = {
   "diversity": green,      // GREEN
@@ -39,6 +40,8 @@ module.exports = {
   lightGray,
   darkGray,
   yellowText,
+  transitionOrange,
+  transitionOrangeDark,
 
   company:    transitionOrange,
   initiative: transitionOrange,

@@ -5,30 +5,10 @@ import { translate } from "react-i18next";
 import { pure } from "recompose";
 import AddressLine from "./AddressLine";
 import T from "prop-types";
-import Actions from "../Actions";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ROUTEPLANNERS } from "../constants/URLs.js"
 import { NAMES } from "../constants/Categories"
-import Tag from "./Tags/Tag"
-
-const Tags = (tags=[], dispatch) =>
-  <TagsWrapper key="tags">
-    <TagList>
-      { tags
-        .filter(t => t != "")
-        .map( (t,index) =>
-          <TagListElem key={"Tag"+t}><Tag
-            clickable={ true }
-            onClick={ () => {
-              dispatch(Actions.showSearchResults());
-              dispatch(Actions.setSearchText('#'+t));
-              return dispatch(Actions.search());
-            }}
-            text = {t}
-          /></TagListElem>
-        )}
-    </TagList>
-  </TagsWrapper>
+import Tags from "./Tags/Tags";
 
 class BusinessCard extends Component {
 
@@ -94,6 +74,11 @@ class BusinessCard extends Component {
           </EntryCategory>
           <EntryTitle>{entry.title}</EntryTitle>
           <EntryDescription>{entry.description}</EntryDescription>
+          {entry.tags && entry.tags.filter(tag => tag === t('transition.partnerTag')).length > 0 &&
+            <TransitionTeaser
+              dangerouslySetInnerHTML={{__html: t('transition.teaserDiscount')}}>
+            </TransitionTeaser>
+          }
           <EntryDetailsOtherData>{[
             (entry.homepage ?
               <div key="hp">
@@ -129,9 +114,8 @@ class BusinessCard extends Component {
                   { this.getRoutePlannerLink() }
                 </div></div>
               : null),
-            (entry.tags && entry.tags.filter(t => t !="").length > 0
-              ? Tags(entry.tags, dispatch)
-              : null)
+            (entry.tags && entry.tags.filter(tag => tag !== '').length > 0 &&
+              <Tags tags={entry.tags} dispatch={dispatch} t={t} key="tags"/>)
           ]}</EntryDetailsOtherData>
         </EntryDetailPage>)
     }
@@ -196,16 +180,10 @@ const EntryDetailsOtherData = styled.div`
   font-family: ${STYLE.headerFont};
 `;
 
-const TagsWrapper = styled.div `
-  margin-top: 1.5em;
-`;
-
-const TagList = styled.ul `
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
-
-const TagListElem = styled.li `
-  display: inline;
+const TransitionTeaser = styled.div`
+  margin: 30px 0;
+  color: ${STYLE.transitionOrange};
+  a {
+    text-decoration: underline;
+  }
 `;

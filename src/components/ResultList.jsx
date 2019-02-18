@@ -47,7 +47,7 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
             entry.tags ? (entry.tags.length > 0)
               ? <TagsWrapper>
                 <ul >
-                  { entry.tags.slice(0, 5).map(t => <Tag key={"Tag"+t} clickable={ false } text = {t} /> ) }
+                  { entry.tags.slice(0, 5).map(tag => <Tag key={"Tag"+tag} clickable={ false } text = {tag} t={t} /> ) }
                 </ul>
               </TagsWrapper>
               : null

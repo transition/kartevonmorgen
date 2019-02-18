@@ -1,29 +1,34 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import styled from "styled-components";
-import STYLE from "../styling/Variables"
-import { pure } from "recompose";
+import {pure} from "recompose";
+import STYLE from "../styling/Variables";
+import T from "prop-types";
+import { translate } from "react-i18next"
 
-class Tag extends Component {
+const Tag = props => {
+  const {onClick, text, clickable, quotes, t} = props;
+  const className = text === translate('transition.partnerTag') ? 'tag highlight' : 'tag';
 
-  render(){
-    const {onClick, text, clickable, quotes } = this.props
-
-    return(
-      <TagLink
-        clickable={ clickable }
-        onClick={ clickable ? onClick : () => false }
-        className="tag"
-      >
-        {quotes
-          ? <span>"{text}"</span>
-          : <span>#{text}</span>
-        }
-      </TagLink>
-    )
-  }
+  return (
+    <TagLink
+      clickable={clickable}
+      onClick={clickable ? onClick : () => false}
+      className={className}>
+      {quotes
+        ? <span>"{text}"</span>
+        : <span>#{text}</span>
+      }
+    </TagLink>
+  )
 }
 
-module.exports = pure(Tag)
+Tag.propTypes = {
+  onClick: T.func,
+  text: T.string,
+  clickable: T.bool,
+  quotes: T.bool,
+  t: T.func.isRequired,
+}
 
 const TagLink = styled.a `
   color: #333;
@@ -38,6 +43,11 @@ const TagLink = styled.a `
   margin-right: 0.4em;
   letter-spacing: 0.06em;
   line-height: 1.2em;
+  
+  &.highlight {
+    color: white;
+    background-color: ${STYLE.transitionOrange};
+  }
 
   ${props => props.clickable && `
     cursor: pointer;
@@ -46,5 +56,12 @@ const TagLink = styled.a `
       color: #fff;
       background-color: #333;
     }
+    
+    &.highlight:hover {
+      color: white;
+      background-color: ${STYLE.transitionOrangeDark};
+    }
   `}
 `
+
+export default Tag;

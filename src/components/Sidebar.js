@@ -70,7 +70,7 @@ class Sidebar extends Component {
       case V.START:
         content = (
           
-          <TransitionStart dispatch={dispatch}/>
+          <TransitionStart dispatch={dispatch} t={t}/>
         );
         break;
 
