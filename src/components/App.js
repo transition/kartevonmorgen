@@ -267,7 +267,6 @@ class Main extends Component {
                 return dispatch(Actions.setMarker(event.latlng));
               }}
               onMarkerClick={markerId => {
-                console.log(markerId, view.left === V.EDIT || view.left === V.NEW, view.left,V.EDIT,view.left,V.NEW)
                 if (view.left === V.EDIT || view.left === V.NEW) return false;
                 dispatch(Actions.setCurrentEntry(markerId, null));
                 dispatch(Actions.showLeftPanel());
