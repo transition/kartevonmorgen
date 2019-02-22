@@ -139,12 +139,14 @@ const Actions = {
         type: T.SET_MORE_ENTRIES_AVAILABLE,
         payload: !fetchedAllEntries && (visibleEntryIds.length > ServerConstants.NUM_ENTRIES_TO_FETCH)
       });
-      // ids = ids.slice(0, ServerConstants.NUM_ENTRIES_TO_FETCH);
-
       const allStoredEntries = getState().server.entries;
       // Only get ids that haven't been loaded before
-      const entryIdsToBeFetched = visibleEntryIds.filter((x) => allStoredEntries[x] == null);
-      Logger.log('[STORE] Requested items:', Object.keys(visibleEntryIds).length, 'New:', entryIdsToBeFetched.length)
+      let entryIdsToBeFetched = visibleEntryIds.filter((x) => allStoredEntries[x] == null);
+      // Store length
+      const entryIdsToBeFetchedLength = entryIdsToBeFetched.length;
+      // Slice ids by max api limit
+      entryIdsToBeFetched = entryIdsToBeFetched.slice(0, ServerConstants.NUM_ENTRIES_TO_FETCH);
+      Logger.log('[STORE] Requested items:', Object.keys(visibleEntryIds).length, 'New:', entryIdsToBeFetchedLength, 'Load:',entryIdsToBeFetched.length)
       // If there are new ones to be fetched
       if (entryIdsToBeFetched.length > 0) {
         WebAPI.getEntries(entryIdsToBeFetched, (err, res) => {
