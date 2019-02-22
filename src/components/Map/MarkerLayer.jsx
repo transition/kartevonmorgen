@@ -4,8 +4,13 @@ import {Marker} from 'react-leaflet'
 import {isEqual} from 'lodash';
 import L from 'leaflet'
 import T from 'prop-types';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
 import LongTooltip from './LongTooltip';
 import SmallTooltip from './SmallTooltip';
+
+require('react-leaflet-markercluster/dist/styles.min.css');
+// TODO: Style with styled-component (which did not work)
+import './MarkerLayer.css';
 
 class MarkerLayer extends PureComponent {
   state = {
@@ -129,30 +134,32 @@ class MarkerLayer extends PureComponent {
   render() {
     return (
       <React.Fragment>
-        {this.state.markers.map(marker => {
-          return (
-            <Marker
-              key={marker.id}
-              onClick={() => this.props.onMarkerClick(marker.id)}
-              position={marker.position}
-              icon={marker.icon}
-              opacity={marker.opacity}>
-              { marker.highlighted
-                ? <SmallTooltip
-                    permanent={true}
-                    direction='bottom'
-                    offset={[0, 20]}>
-                    <h3>{marker.title}</h3>
-                  </SmallTooltip>
-                : <LongTooltip
-                    title={marker.title}
-                    description={marker.description}
-                    categories={marker.categories}
-                    offset={20}/>
-              }
-            </Marker>
-          )
-        })}
+        <MarkerClusterGroup>
+          {this.state.markers.map(marker => {
+            return (
+              <Marker
+                key={marker.id}
+                onClick={() => this.props.onMarkerClick(marker.id)}
+                position={marker.position}
+                icon={marker.icon}
+                opacity={marker.opacity}>
+                { marker.highlighted
+                  ? <SmallTooltip
+                      permanent={true}
+                      direction='bottom'
+                      offset={[0, 20]}>
+                      <h3>{marker.title}</h3>
+                    </SmallTooltip>
+                  : <LongTooltip
+                      title={marker.title}
+                      description={marker.description}
+                      categories={marker.categories}
+                      offset={20}/>
+                }
+              </Marker>
+            )
+          })}
+        </MarkerClusterGroup>
       </React.Fragment>
     )
   }
