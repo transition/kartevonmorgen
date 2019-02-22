@@ -1,15 +1,15 @@
 import React, { Component,PureComponent }         from "react"
 import { Map, TileLayer, AttributionControl, ZoomControl }   from "react-leaflet"
-import URLs                         from "../constants/URLs"
+import URLs                         from "../../constants/URLs"
 import { pure }                     from "recompose"
-import { IDS }                      from  "../constants/Categories"
-import STYLE                        from "./styling/Variables"
+import { IDS }                      from "../../constants/Categories"
+import STYLE                        from "../styling/Variables"
 import styled                       from "styled-components";
 import T                            from "prop-types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import L from 'leaflet'
 import { translate }          from "react-i18next";
-import MarkerLayer from './Map/MarkerLayer';
+import MarkerLayer from './MarkerLayer';
 
 const { INITIATIVE, EVENT, COMPANY } = IDS;
 import  "leaflet/dist/leaflet.css"
