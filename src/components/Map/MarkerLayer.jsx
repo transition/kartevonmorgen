@@ -8,7 +8,9 @@ import MarkerClusterGroup from 'react-leaflet-markercluster';
 import LongTooltip from './LongTooltip';
 import SmallTooltip from './SmallTooltip';
 
-require('react-leaflet-markercluster/dist/styles.min.css'); // inside .js file
+require('react-leaflet-markercluster/dist/styles.min.css');
+// TODO: Style with styled-component (which did not work)
+import './MarkerLayer.css';
 
 class MarkerLayer extends PureComponent {
   state = {
