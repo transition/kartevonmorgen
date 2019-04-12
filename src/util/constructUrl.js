@@ -6,7 +6,7 @@ const searchTextToUrlQuery = (text) => {
   return query;
 }
 
-export default (entry, center, zoom, searchText, showLeft) => {
+export default (entry, center, zoom, searchText, showLeft, userRole) => {
   let params = [];
   if (entry && entry != "NONE") {
     params.push("entry=" + entry);
@@ -23,6 +23,9 @@ export default (entry, center, zoom, searchText, showLeft) => {
   }
   if (showLeft != null) {
     params.push("left=" + (showLeft ? "show" : "hide"));
+  }
+  if (userRole) {
+    params.push(`userRole=${userRole}`);
   }
   
   return "#/?" + params.join("&");

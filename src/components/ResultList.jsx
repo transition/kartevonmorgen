@@ -64,7 +64,7 @@ const ResultListElement = pure(_ResultListElement)
 class ResultList extends Component {
 
   render() {
-    const { dispatch, waiting, entries, ratings, highlight, onClick, moreEntriesAvailable, onMoreEntriesClick, t} = this.props
+    const { userRole, dispatch, waiting, entries, ratings, highlight, onClick, moreEntriesAvailable, onMoreEntriesClick, t} = this.props
 
     let results = entries.map( e => 
       <ResultListElement
@@ -106,22 +106,24 @@ class ResultList extends Component {
                 </p>)
           }
         </div>
-        <nav className="menu pure-g">
-          <NavButton
-            key = "back"
-            classname = "pure-u-1"
-            icon = "plus"
-            text = {t("resultlist.addEntry")}
-            onClick = {() => {
-              dispatch(Actions.showNewEntry());
-            }}
-          />
-        </nav>
+        {userRole === 'editor' &&
+          <nav className="menu pure-g">
+            <NavButton
+              key = "back"
+              classname = "pure-u-1"
+              icon = "plus"
+              text = {t("resultlist.addEntry")}
+              onClick = {() => {
+                dispatch(Actions.showNewEntry());
+              }}
+            />
+          </nav>}
       </Wrapper>)
   }
 }
 
 ResultList.propTypes = {
+  userRole:             PropTypes.string,
   dispatch:             PropTypes.func.isRequired,
   waiting:              PropTypes.bool.isRequired,
   entries:              PropTypes.array.isRequired,

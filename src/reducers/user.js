@@ -1,10 +1,12 @@
 import T from "../constants/ActionTypes";
 import cookies from "../util/cookies";
+import parseUrl from '../util/parseUrl';
 
 const initialState = {
   username: null,
   email: null,
-  subscriptionExists: false
+  subscriptionExists: false,
+  role: null,
 };
 
 module.exports = (state=initialState, action={}) => {
@@ -30,6 +32,15 @@ module.exports = (state=initialState, action={}) => {
         username: null,
         email: null,
         subscriptionExists: false
+      }
+
+    case T.UPDATE_STATE_FROM_URL:
+      const { userRole } = parseUrl(payload).params;
+      const role = userRole || null;
+
+      return {
+        ...state,
+        role,
       }
 
     case T.UPDATE_SUBSCRIPTION_INFO:

@@ -55,7 +55,7 @@ class Sidebar extends Component {
       ratings, dispatch, map, form, t } = this.props;
     const { waiting_for_search_results } = view;
     const { explainRatingContext, selectedContext } = view;
-      
+    const { role: userRole } = user;
     const invisibleEntries = search.invisible.filter((e) => {
       return (entries[e.id] && munichBounds.contains([e.lat,e.lng]))
     }).map(e => entries[e.id]);
@@ -70,6 +70,7 @@ class Sidebar extends Component {
         content = (
           <ResultWrapper className="result">
             <ResultList
+              userRole={userRole}
               waiting={ waiting_for_search_results }
               entries={ entriesArray }
               ratings={ ratings }
@@ -107,6 +108,7 @@ class Sidebar extends Component {
                     { t("search-results.results-out-of-bbox") }
                   </GroupHeader>
                   <ResultList
+                    userRole={userRole}
                     entries={ invisibleEntries }
                     ratings={ ratings }
                     highlight={ search.highlight }
@@ -331,7 +333,7 @@ const GroupHeader = styled.div `
 
 const ResultWrapper = styled.div `
   padding-bottom: 1.5em;
-  height: calc(100vh - 107px);
+  height: calc(100vh - 54px);
   overflow-y: scroll;
   background: #f7f7f7;
 
