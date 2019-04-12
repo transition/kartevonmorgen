@@ -11,7 +11,7 @@ import EntryForm            from "./EntryForm"
 import RatingForm           from "./RatingForm"
 import Message              from "./Message"
 import CityList             from "./CityList"
-import TransitionStart from "./TransitionStart"
+import TransitionStartModal from "./Transition/TransitionStartModal"
 import { EDIT, RATING }     from "../constants/Form"
 import Actions              from "../Actions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -63,17 +63,10 @@ class Sidebar extends Component {
     
     const entry = entries[search.current] || null;
 
-    var content;
-
+    let content;
 
     switch (view.left) {
       case V.START:
-        content = (
-          
-          <TransitionStart dispatch={dispatch} t={t}/>
-        );
-        break;
-
       case V.RESULT:
         content = (
           <ResultWrapper className="result">
