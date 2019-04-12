@@ -6,6 +6,7 @@ import T                    from "prop-types"
 import V                    from "../constants/PanelView"
 import C                    from "../constants/Categories"
 import Actions              from "../Actions"
+import { readFromLocalStorage } from '../util/localStorage';
 // import CityList             from "./CityList"
 import Info                 from "./Info"
 import Modal                from "./Modal"
@@ -23,7 +24,7 @@ import NotificationsSystem  from "reapop";
 import theme                from "reapop-theme-wybo";
 import "./styling/Icons"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled, { keyframes, createGlobalStyle } from "styled-components";
+import styled, { keyframes, createGlobalStyle, ThemeProvider } from "styled-components";
 import STYLE                from "./styling/Variables"
 import Swipeable from 'react-swipeable'
 import Loader from './Loader/Loader';
@@ -86,199 +87,201 @@ class Main extends Component {
     const entriesArray = search.result.filter(e => entries[e.id]).map(e => entries[e.id]);
     const mapCenter = map.center;
     const loggedIn = user.username ? true : false;
-    
-    return (
-      <StyledApp className="app">
-        <GlobalStyle />
-        <MainWrapper className="main">
-          <NotificationsSystem theme={theme}/>
-          { 
-            view.menu ? 
-              <LandingPage
-                onMenuItemClick={ id => {
-                  switch (id) {
-                    case 'map':
-                      return dispatch(Actions.toggleLandingPage());
-                    case 'new':
-                      dispatch(Actions.toggleLandingPage());
-                      return dispatch(Actions.showNewEntry());
-                    case 'landing':
-                      dispatch(Actions.showInfo(null));
-                      return dispatch(Actions.toggleLandingPage());
-                    case V.LOGOUT:
-                      dispatch(Actions.logout());
-                      return dispatch(Actions.showInfo(V.LOGOUT));
-                    case V.SUBSCRIBE_TO_BBOX:
-                      return dispatch(Actions.showSubscribeToBbox());
-                    default:
-                      return dispatch(Actions.showInfo(id));
-                  }
-                }}
-                onChange={ city => {
-                  dispatch(Actions.setCitySearchText(city));
-                  if (city && city.length > 3) {
-                    return dispatch(Actions.searchCity());
-                  }
-                }}
-                content={ view.right }
-                searchText={ search.city }
-                searchError={ search.error }
-                cities={ search.cities }
-                onEscape={ () => { return dispatch(Actions.setCitySearchText('')); }}
-                onSelection={ city => {
-                  if (city) {
-                    dispatch(Actions.setCenter({
-                      lat: city.lat,
-                      lng: city.lon
-                    }));
-                    dispatch(Actions.setZoom(mapConst.CITY_DEFAULT_ZOOM));
-                    dispatch(Actions.toggleLandingPage());
-                    dispatch(Actions.setSearchText(''));
-                    return dispatch(Actions.finishCitySearch());
-                  }
-                }}
-                onLogin={ data => {
-                  var password, username;
-                  username = data.username, password = data.password;
-                  return dispatch(Actions.login(username, password));
-                }}
-                onRegister={ data => {
-                  var email, password, username;
-                  username = data.username, password = data.password, email = data.email;
-                  return dispatch(Actions.register(username, password, email));
-                }}
-                loggedIn={ loggedIn}
-                user={ user}
-                onDeleteAccount={ () => {
-                  return dispatch(Actions.deleteAccount());
-                }}
-              />
-              : ""
-          }
-          { 
-            view.modal != null ? <Modal view={view} dispatch={dispatch} /> : ""
-          }
 
-          {/* <Swipeable onSwipedLeft={ () => this.swipedLeftOnPanel() }> */}
-            <LeftPanel className={"left " + (view.showLeftPanel && !view.menu ? 'opened' : 'closed')}>
-              <div className={"search " + ((view.left === V.RESULT || view.left === V.START) ? 'open' : 'closed')}>
-                <SearchBar
-                  tags={search.tags}
-                  searchText={search.text}
-                  categories={search.categories}
-                  type="integrated"
-                  dispatch={dispatch}
-                  start={view.left === V.START}
-                  disabled={view.left === V.EDIT || view.left === V.NEW}
-                  toggleCat={ c => {
-                    if (c === C.IDS.EVENT) {
-                      return dispatch(Actions.showFeatureToDonate("events"));
-                    } else {
-                      dispatch(Actions.toggleSearchCategory(c));
-                      return dispatch(Actions.search());
+    return (
+      <ThemeProvider theme={STYLE}>
+        <StyledApp className="app">
+          <GlobalStyle />
+          <MainWrapper className="main">
+            <NotificationsSystem theme={theme}/>
+            {
+              view.menu ?
+                <LandingPageH
+                  onMenuItemClick={ id => {
+                    switch (id) {
+                      case 'map':
+                        return dispatch(Actions.toggleLandingPage());
+                      case 'new':
+                        dispatch(Actions.toggleLandingPage());
+                        return dispatch(Actions.showNewEntry());
+                      case 'landing':
+                        dispatch(Actions.showInfo(null));
+                        return dispatch(Actions.toggleLandingPage());
+                      case V.LOGOUT:
+                        dispatch(Actions.logout());
+                        return dispatch(Actions.showInfo(V.LOGOUT));
+                      case V.SUBSCRIBE_TO_BBOX:
+                        return dispatch(Actions.showSubscribeToBbox());
+                      default:
+                        return dispatch(Actions.showInfo(id));
                     }
                   }}
-                  onChange={txt => {
-                    if (txt == null) { txt = "" }
-                    dispatch(Actions.setSearchText(txt));
-                    dispatch(Actions.showSearchResults());
-                    return dispatch(Actions.search());
-                  }}
-                  onPlaceSearch={txt => {
-                    dispatch(Actions.setSearchText(''));
-                    dispatch(Actions.showResultList());
-                    dispatch(Actions.setCitySearchText(txt));
-                    if (txt && txt.length > 3) {
+                  onChange={ city => {
+                    dispatch(Actions.setCitySearchText(city));
+                    if (city && city.length > 3) {
                       return dispatch(Actions.searchCity());
                     }
                   }}
-                  onEscape={ () => {
-                    return dispatch(Actions.setSearchText(''));
+                  content={ view.right }
+                  searchText={ search.city }
+                  searchError={ search.error }
+                  cities={ search.cities }
+                  onEscape={ () => { return dispatch(Actions.setCitySearchText('')); }}
+                  onSelection={ city => {
+                    if (city) {
+                      dispatch(Actions.setCenter({
+                        lat: city.lat,
+                        lng: city.lon
+                      }));
+                      dispatch(Actions.setZoom(mapConst.CITY_DEFAULT_ZOOM));
+                      dispatch(Actions.toggleLandingPage());
+                      dispatch(Actions.setSearchText(''));
+                      return dispatch(Actions.finishCitySearch());
+                    }
                   }}
-                  onEnter={ () => {}}      // currently not used, TODO
-                  loading={ server.loadingSearch || server.entriesLoading }
+                  onLogin={ data => {
+                    var password, username;
+                    username = data.username, password = data.password;
+                    return dispatch(Actions.login(username, password));
+                  }}
+                  onRegister={ data => {
+                    var email, password, username;
+                    username = data.username, password = data.password, email = data.email;
+                    return dispatch(Actions.register(username, password, email));
+                  }}
+                  loggedIn={ loggedIn}
+                  user={ user}
+                  onDeleteAccount={ () => {
+                    return dispatch(Actions.deleteAccount());
+                  }}
                 />
-              </div>
+                : ""
+            }
+            {
+              view.modal != null ? <Modal view={view} dispatch={dispatch} /> : ""
+            }
 
-              <div className="content-wrapper">
-                <Sidebar
-                  view={ view }
-                  search={ search }
-                  map={ map }
-                  user={ user }
-                  form={ form }
-                  entries={entries}
-                  entriesArray={ entriesArray }
-                  ratings={ ratings }
-                  // LeftPanelentries={ server.entries } never used…?
-                  dispatch={ dispatch }
-                  t={ t }
-                />
-              </div>
-            </LeftPanel>
-          {/* </Swipeable> */}
+            {/* <Swipeable onSwipedLeft={ () => this.swipedLeftOnPanel() }> */}
+              <LeftPanel className={"left " + (view.showLeftPanel && !view.menu ? 'opened' : 'closed')}>
+                <div className={"search " + ((view.left === V.RESULT || view.left === V.START) ? 'open' : 'closed')}>
+                  <SearchBar
+                    tags={search.tags}
+                    searchText={search.text}
+                    categories={search.categories}
+                    type="integrated"
+                    dispatch={dispatch}
+                    start={view.left === V.START}
+                    disabled={view.left === V.EDIT || view.left === V.NEW}
+                    toggleCat={ c => {
+                      if (c === C.IDS.EVENT) {
+                        return dispatch(Actions.showFeatureToDonate("events"));
+                      } else {
+                        dispatch(Actions.toggleSearchCategory(c));
+                        return dispatch(Actions.search());
+                      }
+                    }}
+                    onChange={txt => {
+                      if (txt == null) { txt = "" }
+                      dispatch(Actions.setSearchText(txt));
+                      dispatch(Actions.showSearchResults());
+                      return dispatch(Actions.search());
+                    }}
+                    onPlaceSearch={txt => {
+                      dispatch(Actions.setSearchText(''));
+                      dispatch(Actions.showResultList());
+                      dispatch(Actions.setCitySearchText(txt));
+                      if (txt && txt.length > 3) {
+                        return dispatch(Actions.searchCity());
+                      }
+                    }}
+                    onEscape={ () => {
+                      return dispatch(Actions.setSearchText(''));
+                    }}
+                    onEnter={ () => {}}      // currently not used, TODO
+                    loading={ server.loadingSearch || server.entriesLoading }
+                  />
+                </div>
 
-          <HiddenSidebar>
-            <button
-              onClick={ () => {
-                if (view.showLeftPanel) {
-                  return dispatch(Actions.hideLeftPanel());
-                } else {
-                  return dispatch(Actions.showLeftPanel());
-                }
-              }}>
-              <ToggleLeftSidebarIcon icon={"caret-" + (view.showLeftPanel ? 'left' : 'right')} />
-            </button>
-          </HiddenSidebar>   
-          
-          {/* <RightPanel>
-            <div className="menu-toggle">
-              <button onClick={()=>{ 
-                dispatch(Actions.setSearchText(''));
-                return dispatch(Actions.showStart());
-              }} >
-                <span>
-                  <MenuFontAwesomeIcon icon={'bars'} />
-                </span>
+                <div className="content-wrapper">
+                  <Sidebar
+                    view={ view }
+                    search={ search }
+                    map={ map }
+                    user={ user }
+                    form={ form }
+                    entries={entries}
+                    entriesArray={ entriesArray }
+                    ratings={ ratings }
+                    // LeftPanelentries={ server.entries } never used…?
+                    dispatch={ dispatch }
+                    t={ t }
+                  />
+                </div>
+              </LeftPanel>
+            {/* </Swipeable> */}
+
+            <HiddenSidebar>
+              <button
+                onClick={ () => {
+                  if (view.showLeftPanel) {
+                    return dispatch(Actions.hideLeftPanel());
+                  } else {
+                    return dispatch(Actions.showLeftPanel());
+                  }
+                }}>
+                <ToggleLeftSidebarIcon icon={"caret-" + (view.showLeftPanel ? 'left' : 'right')} />
               </button>
-            </div>
-          </RightPanel>  */}
+            </HiddenSidebar>
 
-          <Swipeable onSwipedRight={ (e, deltaX) => this.swipedRightOnMap(e, deltaX) } className="center">
-            <Loader loading={ server.loadingSearch || server.entriesLoading }></Loader>
-            <Map
-              highlight={ search.highlight }
-              center={ mapCenter}
-              zoom={ map.zoom}
-              category={ form[EDIT.id] ? form[EDIT.id].category ? form[EDIT.id].category.value : null : null}
-              entries={entriesArray}
-              onClick={ (event) => {
-                if(event.originalEvent.srcElement.tagName.toLowerCase() === 'path') return false;
-                
-                //back to overview
-                if(view.left === V.ENTRY)
-                {
-                  dispatch(Actions.setCurrentEntry(null, null));
-                  dispatch(Actions.showSearchResults());
-                  dispatch(Actions.setCenterInUrl(mapCenter));
-                }
+            {/* <RightPanel>
+              <div className="menu-toggle">
+                <button onClick={()=>{
+                  dispatch(Actions.setSearchText(''));
+                  return dispatch(Actions.showStart());
+                }} >
+                  <span>
+                    <MenuFontAwesomeIcon icon={'bars'} />
+                  </span>
+                </button>
+              </div>
+            </RightPanel>  */}
 
-                dispatch(Actions.hideLeftPanelOnMobile());
-                return dispatch(Actions.setMarker(event.latlng));
-              }}
-              onMarkerClick={markerId => {
-                if (view.left === V.EDIT || view.left === V.NEW) return false;
-                dispatch(Actions.setCurrentEntry(markerId, null));
-                dispatch(Actions.showLeftPanel());
-              }}
-              onMoveend={ coordinates => { return dispatch(Actions.onMoveend(coordinates, map.center)); }}
-              onZoomend={ coordinates => { return dispatch(Actions.onZoomend(coordinates, map.zoom)); }}
-              onLocate={ () => { return dispatch(Actions.showOwnPosition()); }}
-              showLocateButton={ true }
-            />
-          </Swipeable>
-        </MainWrapper>
-      </StyledApp>
+            <Swipeable onSwipedRight={ (e, deltaX) => this.swipedRightOnMap(e, deltaX) } className="center">
+              <Loader loading={ server.loadingSearch || server.entriesLoading }></Loader>
+              <Map
+                highlight={ search.highlight }
+                center={ mapCenter}
+                zoom={ map.zoom}
+                category={ form[EDIT.id] ? form[EDIT.id].category ? form[EDIT.id].category.value : null : null}
+                entries={entriesArray}
+                onClick={ (event) => {
+                  if(event.originalEvent.srcElement.tagName.toLowerCase() === 'path') return false;
+
+                  //back to overview
+                  if(view.left === V.ENTRY)
+                  {
+                    dispatch(Actions.setCurrentEntry(null, null));
+                    dispatch(Actions.showSearchResults());
+                    dispatch(Actions.setCenterInUrl(mapCenter));
+                  }
+
+                  dispatch(Actions.hideLeftPanelOnMobile());
+                  return dispatch(Actions.setMarker(event.latlng));
+                }}
+                onMarkerClick={markerId => {
+                  if (view.left === V.EDIT || view.left === V.NEW) return false;
+                  dispatch(Actions.setCurrentEntry(markerId, null));
+                  dispatch(Actions.showLeftPanel());
+                }}
+                onMoveend={ coordinates => { return dispatch(Actions.onMoveend(coordinates, map.center)); }}
+                onZoomend={ coordinates => { return dispatch(Actions.onZoomend(coordinates, map.zoom)); }}
+                onLocate={ () => { return dispatch(Actions.showOwnPosition()); }}
+                showLocateButton={ true }
+              />
+            </Swipeable>
+          </MainWrapper>
+        </StyledApp>
+      </ThemeProvider>
     );  
   }
 }
