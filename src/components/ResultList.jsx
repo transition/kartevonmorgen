@@ -96,12 +96,10 @@ class ResultList extends Component {
             (results.length > 0)
               ? <ul>{results}</ul>
               : (waiting ?
-                <p className= "loading">
-                  <MoreEntriesLink onClick = { onMoreEntriesClick } href="#">
-                    {t("resultlist.showMoreEntries")}
-                  </MoreEntriesLink>
+                <p className="loading">
+                  {t("resultlist.entriesLoading")}
                 </p>
-                : <p className= "no-results">
+                : <p className="no-results">
                   <MoreEntriesLink onClick = { onMoreEntriesClick } href="#">
                     {t("resultlist.showMoreEntries")}
                   </MoreEntriesLink>
