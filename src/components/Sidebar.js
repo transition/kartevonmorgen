@@ -11,7 +11,6 @@ import EntryForm            from "./EntryForm"
 import RatingForm           from "./RatingForm"
 import Message              from "./Message"
 import CityList             from "./CityList"
-import TransitionStartModal from "./Transition/TransitionStartModal"
 import { EDIT, RATING }     from "../constants/Form"
 import Actions              from "../Actions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

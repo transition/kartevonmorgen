@@ -55,6 +55,7 @@ const Actions = {
   cancelWait          : () => ({ type: T.CANCEL_WAIT_IO }),
   showLeftPanel       : () => ({ type: T.SHOW_LEFT_PANEL }),
   hideLeftPanel       : () => ({ type: T.HIDE_LEFT_PANEL }),
+  onStartModalToggle  : () => ({ type: T.TOGGLE_START_MODAL }),
 
   hideLeftPanelOnMobile: () =>
     (dispatch) => {

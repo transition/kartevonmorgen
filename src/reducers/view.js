@@ -10,7 +10,8 @@ const initialState = {
   waiting_for_search_results: true,
   explainRatingContext: null,
   selectedContext: null,
-  showLeftPanel: true
+  showLeftPanel: true,
+  showStartModal: true,
 };
 
 module.exports = (state=initialState, action={}) => {
@@ -30,6 +31,13 @@ module.exports = (state=initialState, action={}) => {
         right: m ? state.right : null,
         left: m ? null : state.left
       }
+
+    case T.TOGGLE_START_MODAL:
+      return {
+        ...state,
+        showStartModal: !state.showStartModal,
+      }
+      return state;
 
     case T.SHOW_MENU:
       return {

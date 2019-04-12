@@ -28,6 +28,9 @@ import styled, { keyframes, createGlobalStyle, ThemeProvider } from "styled-comp
 import STYLE                from "./styling/Variables"
 import Swipeable from 'react-swipeable'
 import Loader from './Loader/Loader';
+import pincloud from "../img/pincloud.png";
+import store from "../Store";
+import StartModal from './Transition/StartModal';
 
 import ReactGA from 'react-ga';
 ReactGA.initialize('UA-120539306-2'); //Unique Google Analytics tracking number UA-120539306-1
@@ -36,7 +39,7 @@ ReactGA.set({ forceSSL: true });
 ReactGA.pageview(window.location.hash);
 
 class Main extends Component {
-  
+
   escFunction(event){
     if(event.keyCode === 27) { //ESC
       const { view, dispatch}  = this.props
@@ -50,7 +53,7 @@ class Main extends Component {
       if(view.left === V.RESULT){
         dispatch(Actions.setSearchText(''))
         return dispatch(Actions.search())
-      } 
+      }
     }
   }
 
@@ -77,22 +80,28 @@ class Main extends Component {
     const { dispatch, search, view, server, map, form, url, user, timedActions, t } = this.props;
     const { addresses } = search;
     const { entries, ratings } = server;
-    const { explainRatingContext, selectedContext } = view;
+    let { showStartModal } = view;
 
     if (url.hash !== window.location.hash) {
       // console.log("URL CHANGE FROM APP: " + window.location.hash + " --> " + url.hash);
       window.history.pushState(null, null, window.location.pathname + url.hash);
     }
-    
+
     const entriesArray = search.result.filter(e => entries[e.id]).map(e => entries[e.id]);
     const mapCenter = map.center;
     const loggedIn = user.username ? true : false;
+
+    // User marked start modal to be hidden
+    if (readFromLocalStorage('hideStartModal')) {
+      showStartModal = false;
+    }
 
     return (
       <ThemeProvider theme={STYLE}>
         <StyledApp className="app">
           <GlobalStyle />
           <MainWrapper className="main">
+            {showStartModal && <StartModal dispatch={dispatch} t={t} />}
             <NotificationsSystem theme={theme}/>
             {
               view.menu ?
@@ -162,62 +171,62 @@ class Main extends Component {
             }
 
             {/* <Swipeable onSwipedLeft={ () => this.swipedLeftOnPanel() }> */}
-              <LeftPanel className={"left " + (view.showLeftPanel && !view.menu ? 'opened' : 'closed')}>
-                <div className={"search " + ((view.left === V.RESULT || view.left === V.START) ? 'open' : 'closed')}>
-                  <SearchBar
-                    tags={search.tags}
-                    searchText={search.text}
-                    categories={search.categories}
-                    type="integrated"
-                    dispatch={dispatch}
-                    start={view.left === V.START}
-                    disabled={view.left === V.EDIT || view.left === V.NEW}
-                    toggleCat={ c => {
-                      if (c === C.IDS.EVENT) {
-                        return dispatch(Actions.showFeatureToDonate("events"));
-                      } else {
-                        dispatch(Actions.toggleSearchCategory(c));
-                        return dispatch(Actions.search());
-                      }
-                    }}
-                    onChange={txt => {
-                      if (txt == null) { txt = "" }
-                      dispatch(Actions.setSearchText(txt));
-                      dispatch(Actions.showSearchResults());
+            <LeftPanel className={"left " + (view.showLeftPanel && !view.menu ? 'opened' : 'closed')}>
+              <div className={"search " + ((view.left === V.RESULT || view.left === V.START) ? 'open' : 'closed')}>
+                <SearchBar
+                  tags={search.tags}
+                  searchText={search.text}
+                  categories={search.categories}
+                  type="integrated"
+                  dispatch={dispatch}
+                  start={view.left === V.START}
+                  disabled={view.left === V.EDIT || view.left === V.NEW}
+                  toggleCat={ c => {
+                    if (c === C.IDS.EVENT) {
+                      return dispatch(Actions.showFeatureToDonate("events"));
+                    } else {
+                      dispatch(Actions.toggleSearchCategory(c));
                       return dispatch(Actions.search());
-                    }}
-                    onPlaceSearch={txt => {
-                      dispatch(Actions.setSearchText(''));
-                      dispatch(Actions.showResultList());
-                      dispatch(Actions.setCitySearchText(txt));
-                      if (txt && txt.length > 3) {
-                        return dispatch(Actions.searchCity());
-                      }
-                    }}
-                    onEscape={ () => {
-                      return dispatch(Actions.setSearchText(''));
-                    }}
-                    onEnter={ () => {}}      // currently not used, TODO
-                    loading={ server.loadingSearch || server.entriesLoading }
-                  />
-                </div>
+                    }
+                  }}
+                  onChange={txt => {
+                    if (txt == null) { txt = "" }
+                    dispatch(Actions.setSearchText(txt));
+                    dispatch(Actions.showSearchResults());
+                    return dispatch(Actions.search());
+                  }}
+                  onPlaceSearch={txt => {
+                    dispatch(Actions.setSearchText(''));
+                    dispatch(Actions.showResultList());
+                    dispatch(Actions.setCitySearchText(txt));
+                    if (txt && txt.length > 3) {
+                      return dispatch(Actions.searchCity());
+                    }
+                  }}
+                  onEscape={ () => {
+                    return dispatch(Actions.setSearchText(''));
+                  }}
+                  onEnter={ () => {}}      // currently not used, TODO
+                  loading={ server.loadingSearch || server.entriesLoading }
+                />
+              </div>
 
-                <div className="content-wrapper">
-                  <Sidebar
-                    view={ view }
-                    search={ search }
-                    map={ map }
-                    user={ user }
-                    form={ form }
-                    entries={entries}
-                    entriesArray={ entriesArray }
-                    ratings={ ratings }
-                    // LeftPanelentries={ server.entries } never used…?
-                    dispatch={ dispatch }
-                    t={ t }
-                  />
-                </div>
-              </LeftPanel>
+              <div className="content-wrapper">
+                <Sidebar
+                  view={ view }
+                  search={ search }
+                  map={ map }
+                  user={ user }
+                  form={ form }
+                  entries={entries}
+                  entriesArray={ entriesArray }
+                  ratings={ ratings }
+                  // LeftPanelentries={ server.entries } never used…?
+                  dispatch={ dispatch }
+                  t={ t }
+                />
+              </div>
+            </LeftPanel>
             {/* </Swipeable> */}
 
             <HiddenSidebar>
@@ -282,7 +291,7 @@ class Main extends Component {
           </MainWrapper>
         </StyledApp>
       </ThemeProvider>
-    );  
+    );
   }
 }
 
@@ -324,10 +333,6 @@ const fadein = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }
 `
-
-import pincloud from "../img/pincloud.png";
-import store from "../Store";
-
 
 const MainWrapper = styled.div `
   height: 100vh;
