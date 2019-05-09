@@ -134,7 +134,7 @@ class MarkerLayer extends PureComponent {
   render() {
     return (
       <React.Fragment>
-        <MarkerClusterGroup>
+        <MarkerClusterGroup disableClusteringAtZoom={12}>
           {this.state.markers.map(marker => {
             return (
               <Marker
