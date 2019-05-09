@@ -85,7 +85,9 @@ class TagAutocomplete extends Component {
   }
 
   onInputChange(input) {
-    this.customFilter(input)
+    if (this.props.userRole && this.props.userRole === 'editor') {
+      this.customFilter(input)
+    }
   }
 
   customFilter(input) {
@@ -184,7 +186,8 @@ class TagAutocomplete extends Component {
         classNamePrefix="search-input"
         options={ this.state.options }
           
-        placeholder={this.props.t("searchbar.placeholder")}
+        //placeholder={this.props.t("searchbar.placeholder")}
+        placeholder="Wähle einen Hashtag..."
         // noOptionsMessage={() => this.props.t("searchbar.noSuggestions") }
         // formatCreateLabel={(inputValue) => 'Nach "' + inputValue +'" suchen…' }
         // createOptionPosition="first"

@@ -64,7 +64,8 @@ class SearchBar extends React.Component {
 
   render() {
 
-    const { categories, disabled, toggleCat, searchText, t, loading, tags, dispatch, start } = this.props;
+    const { categories, disabled, toggleCat, searchText, t, loading, tags, dispatch, start, user } = this.props;
+    const { role: userRole } = user;
 
 
     return (
@@ -112,6 +113,7 @@ class SearchBar extends React.Component {
             onPlaceSearch = { this.props.onPlaceSearch }
             searchText = { this.props.searchText }
             allTags = {tags}
+            userRole={userRole}
           />
           {/* onChange    = { this.onChange }
             disabled    = { disabled }

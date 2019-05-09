@@ -208,6 +208,7 @@ class Main extends Component {
                   }}
                   onEnter={ () => {}}      // currently not used, TODO
                   loading={ server.loadingSearch || server.entriesLoading }
+                  user={ user }
                 />
               </div>
 
