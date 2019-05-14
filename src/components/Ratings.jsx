@@ -86,9 +86,9 @@ class Ratings extends Component {
     if(entry){
       return(
         <RatingsWrapper>
-          <FlowerWrapper>
-            <Flower ratings={ratings} radius={40} showTooltip={true} />
-          </FlowerWrapper>
+          {/*<FlowerWrapper>*/}
+          {/*  <Flower ratings={ratings} radius={40} showTooltip={true} />*/}
+          {/*</FlowerWrapper>*/}
           <HeadingWrapper>
             <h3>{t("heading")}</h3>
             <AdditionalRatingButtonWrapper>

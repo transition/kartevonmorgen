@@ -40,9 +40,9 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
           <div>
             <Description>{description}</Description>
           </div>
-          <FlowerWrapper>
-            <Flower ratings={ratings} radius={30} showTooltip={false}/>
-          </FlowerWrapper>
+          {/*<FlowerWrapper>*/}
+          {/*  <Flower ratings={ratings} radius={30} showTooltip={false}/>*/}
+          {/*</FlowerWrapper>*/}
           {
             entry.tags ? (entry.tags.length > 0)
               ? <TagsWrapper>
