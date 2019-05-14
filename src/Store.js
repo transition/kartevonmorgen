@@ -4,7 +4,7 @@ import thunk    from "redux-thunk"; // lets us dispatch() functions
 
 let middlewares = [thunk];
 
-import { createStore, applyMiddleware } from "redux";
+import { compose, createStore, applyMiddleware } from "redux";
 
 if (__DEVELOPMENT__) {
   // middlewares.push(logger);
