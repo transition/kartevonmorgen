@@ -28,7 +28,7 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
       onMouseEnter  = { (ev) => { ev.preventDefault(); onMouseEnter(entry.id) }}
       onMouseLeave  = { (ev) => { ev.preventDefault(); onMouseLeave(entry.id) }} >
       <div className = "pure-g">
-        <div className = "pure-u-19-24">
+        <div className = "pure-u-1">
           <div className="category">
             <span className="category">
               { t("category." + NAMES[entry.categories && entry.categories[0]]) }
