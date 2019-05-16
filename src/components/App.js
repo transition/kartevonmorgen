@@ -257,7 +257,7 @@ class Main extends Component {
             </RightPanel>  */}
 
             <Swipeable onSwipedRight={ (e, deltaX) => this.swipedRightOnMap(e, deltaX) } className="center">
-              <Loader loading={ server.loadingSearch || server.entriesLoading }></Loader>
+              <Loader loading={ !view.showLeftPanel && (server.loadingSearch || server.entriesLoading) }></Loader>
               <Map
                 highlight={ search.highlight }
                 center={ mapCenter}
