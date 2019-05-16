@@ -102,7 +102,7 @@ class SearchBar extends React.Component {
                 return dispatch(Actions.showStart());
               }} >
                 <span>
-                  <FontAwesomeIcon icon={'bars'} />
+                  <FontAwesomeIcon icon={'search'} />
                 </span>
               </button>
             }
