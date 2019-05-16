@@ -86,27 +86,27 @@ class Ratings extends Component {
     if(entry){
       return(
         <RatingsWrapper>
-          {/*<FlowerWrapper>*/}
-          {/*  <Flower ratings={ratings} radius={40} showTooltip={true} />*/}
-          {/*</FlowerWrapper>*/}
-          <HeadingWrapper>
-            <h3>{t("heading")}</h3>
-            <AdditionalRatingButtonWrapper>
-              { entry.ratings && entry.ratings.length > 0
-                ? <AdditionalRatingButton onClick={() => { onRate(entry.id) }}>{t("newRating")}</AdditionalRatingButton>
-                : ""
-              }
-            </AdditionalRatingButtonWrapper>
-          </HeadingWrapper>
-          { entry.ratings && entry.ratings.length > 0
-            ? <div>
-              { ratingElements }
-            </div>
-            : <FirstRatingButtonWrapper>
-              <p>{t("noRatingsYet")}</p>
-              <FirstRatingButton onClick={() => { onRate(entry.id) }}>{t("giveFirstRating")}</FirstRatingButton>
-            </FirstRatingButtonWrapper>
-          }
+          {/*/!*<FlowerWrapper>*!/*/}
+          {/*/!*  <Flower ratings={ratings} radius={40} showTooltip={true} />*!/*/}
+          {/*/!*</FlowerWrapper>*!/*/}
+          {/*<HeadingWrapper>*/}
+          {/*  <h3>{t("heading")}</h3>*/}
+          {/*  <AdditionalRatingButtonWrapper>*/}
+          {/*    { entry.ratings && entry.ratings.length > 0*/}
+          {/*      ? <AdditionalRatingButton onClick={() => { onRate(entry.id) }}>{t("newRating")}</AdditionalRatingButton>*/}
+          {/*      : ""*/}
+          {/*    }*/}
+          {/*  </AdditionalRatingButtonWrapper>*/}
+          {/*</HeadingWrapper>*/}
+          {/*{ entry.ratings && entry.ratings.length > 0*/}
+          {/*  ? <div>*/}
+          {/*    { ratingElements }*/}
+          {/*  </div>*/}
+          {/*  : <FirstRatingButtonWrapper>*/}
+          {/*    <p>{t("noRatingsYet")}</p>*/}
+          {/*    <FirstRatingButton onClick={() => { onRate(entry.id) }}>{t("giveFirstRating")}</FirstRatingButton>*/}
+          {/*  </FirstRatingButtonWrapper>*/}
+          {/*}*/}
         </RatingsWrapper>
       );
     } else {
