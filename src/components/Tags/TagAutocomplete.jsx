@@ -85,9 +85,7 @@ class TagAutocomplete extends Component {
   }
 
   onInputChange(input) {
-    if (this.props.userRole && this.props.userRole === 'editor') {
-      this.customFilter(input)
-    }
+    this.customFilter(input)
   }
 
   customFilter(input) {
@@ -178,6 +176,7 @@ class TagAutocomplete extends Component {
 
         components={{ Option: TagOption, MultiValueContainer: MultiTagContainer }}
 
+        isSearchable={this.props.userRole && this.props.userRole === 'editor'}
         isClearable={true}
         isMulti={true}
         
