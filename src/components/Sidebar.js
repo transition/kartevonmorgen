@@ -335,6 +335,7 @@ const ResultWrapper = styled.div `
   padding-bottom: 1.5em;
   height: calc(100vh - 54px);
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   background: #f7f7f7;
 
    /* city list only for sidebar, not landing page TODO: where to put this? */

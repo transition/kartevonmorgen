@@ -81,7 +81,7 @@ class SearchBar extends React.Component {
           /> 
         </MainCategories>*/}
 
-        <div className = "pure-u-1">
+        <div className = "pure-u-1 search-bar">
           <div onClick = { this.props.onLenseClick } className = "search-icon">
             { loading ?
               <SpinLoader
@@ -259,14 +259,26 @@ const Bar = styled.div `
     padding: 0.4em;
     padding-left:  2em;
   }
+  
+  .search-bar {
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     border: 1px solid rgba(0,0,0,0.1);
+  }
+  
 
   .search-icon{
-    position: absolute;
-    margin: 1em 0 0 0.9em;
-    display: inline-block;
+    width: 40px;
     z-index: 5;
     color: ${STYLE.darkGray};
-    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    button {
+      background: transparent;
+    }
 
     svg {
       width: 1.2rem;

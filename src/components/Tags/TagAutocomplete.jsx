@@ -215,11 +215,12 @@ const StyledSelect = styled(Select) `
   ::placeholder{
     color: #aaa;
   }
-  border: 1px solid rgba(0,0,0,0.1) !important;
+  flex: 1;
+  border: none !important;
   border-radius: 0 !important;
-  font-size: 1.1em !important;
-  line-height: 1.7em !important;
-  padding: .3em 0;
+  //font-size: 1.1em !important;
+  //line-height: 1.7em !important;
+  //padding: .3em 0;
   font-weight: normal;
   
   > .search-input__control, > .search-input__control--is-focused {
@@ -230,15 +231,33 @@ const StyledSelect = styled(Select) `
 
   > .search-input__menu {
       z-index:20;
+      margin-top: 1px;
+      border-radius: 0;
+  }
+  
+  .search-input__control {
+    position: initial;
+    .search-input__value-container {
+      input {
+        padding: 10px 0;
+      }
+      .search-input__placeholder {
+        font-size: 14px;
+        @media (min-width: 560px) {
+          font-size: 16px;
+        }
+      }
+    }
   }
 
   .search-input__value-container {
-    padding-left: 3em !important;
     font-size: 1.2rem;
 
     .tag {
-      font-size: .9em !important;
       margin-bottom: 0;
+      @media (min-width: 560px) {
+        font-size: 16px;
+      }
     }
   }
 
@@ -247,7 +266,7 @@ const StyledSelect = styled(Select) `
 
 const _TagOption = styled.div `
 
-  padding-left: 2rem;
+  padding-left: 10px;
   cursor: pointer;
   display: block;
   line-height: 2.5rem;

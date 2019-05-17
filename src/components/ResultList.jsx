@@ -47,7 +47,7 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
             entry.tags ? (entry.tags.length > 0)
               ? <TagsWrapper>
                 <ul >
-                  { entry.tags.slice(0, 5).map(tag => <Tag key={"Tag"+tag} clickable={ false } text = {tag} t={t} /> ) }
+                  { entry.tags.slice(0, 5).map(tag => <Tag key={"Tag"+tag} clickable={ true } text = {tag} t={t} /> ) }
                 </ul>
               </TagsWrapper>
               : null
@@ -147,7 +147,10 @@ const EntryTitle = styled.h3`
 
 const MoreEntriesLink = styled.a`
   color: ${ STYLE.initiative };
-  font-size:1.1rem;
+  font-size: 14px;
+  @media (min-width: 560px) {
+    font-size: 16px;
+  }
 `
 
 const ListElement = styled.li `
