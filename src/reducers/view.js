@@ -219,7 +219,7 @@ module.exports = (state=initialState, action={}) => {
       return {
         ...state,
         left: V.RESULT,
-        waiting_for_search_results: true
+        waiting_for_search_results: false,
       }
 
     case T.SHOW_OWN_POSITION:
