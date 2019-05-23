@@ -20,7 +20,7 @@ const Navbar = styled.nav`
 class EntryDetails extends Component {
 
   render() {
-    const { entry, t, dispatch, mapCenter } = this.props;
+    const { entry, t, dispatch, mapCenter, userRole } = this.props;
     const hasImage = entry ? (entry.image_url ? true : false) : false;
     if (!entry) {
       return(
@@ -45,16 +45,17 @@ class EntryDetails extends Component {
               }}
               aboveImage={hasImage}
             />
-            <NavButtonWhite
-              keyName = "edit"
-              buttonRight = { true }
-              icon = "pencil-alt"
-              text = ""
-              onClick = {() => {
-                this.props.dispatch(Actions.editCurrentEntry());
-              }}
-              aboveImage={hasImage}
-            />
+            {userRole === 'editor' &&
+              <NavButtonWhite
+                keyName = "edit"
+                buttonRight = { true }
+                icon = "pencil-alt"
+                text = ""
+                onClick = {() => {
+                  this.props.dispatch(Actions.editCurrentEntry());
+                }}
+                aboveImage={hasImage}
+              />}
           </Navbar>
           {
             hasImage ?

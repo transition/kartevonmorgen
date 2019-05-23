@@ -132,6 +132,7 @@ class Sidebar extends Component {
         else content = (
           <div className="content" ref={this.setEntryContentRef}>
             <EntryDetails
+              userRole={userRole}
               entry={ entry }
               dispatch={ dispatch }
               mapCenter={ map.center }
