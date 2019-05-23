@@ -12,9 +12,16 @@ import STYLE from "./styling/Variables"
 import styled from "styled-components";
 import Tag from "./Tags/Tag"
 
-const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, onMouseLeave, t}) => {
+const _ResultListElement = ({dispatch, highlight, entry, ratings, onClick, onMouseEnter, onMouseLeave, t}) => {
   var css_class = highlight ? 'highlight-entry ' : '';
   css_class = css_class + NAMES[entry.categories && entry.categories[0]];
+
+  function onTagClick(e) {
+    e.preventDefault();
+    dispatch(Actions.showSearchResults());
+    dispatch(Actions.setSearchText(e.target.innerText || e.target.textContent));
+    return dispatch(Actions.search());
+  }
 
   let description = entry.description;
   if(description.length > 150) description = description.substring(0,131 + description.substring(130).indexOf(".") ) + ' …'
@@ -24,7 +31,6 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
     <ListElement
       key           = { entry.id }
       className     = { css_class }
-      onClick       = { (ev) => { onClick(entry.id, {lat: entry.lat, lng: entry.lng}) }}
       onMouseEnter  = { (ev) => { ev.preventDefault(); onMouseEnter(entry.id) }}
       onMouseLeave  = { (ev) => { ev.preventDefault(); onMouseLeave(entry.id) }} >
       <div className = "pure-g">
@@ -34,10 +40,10 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
               { t("category." + NAMES[entry.categories && entry.categories[0]]) }
             </span>
           </div>
-          <div>
+          <div onClick={ (ev) => { onClick(entry.id, {lat: entry.lat, lng: entry.lng}) }}>
             <EntryTitle className="title">{entry.title}</EntryTitle>
           </div>
-          <div>
+          <div onClick={ (ev) => { onClick(entry.id, {lat: entry.lat, lng: entry.lng}) }}>
             <Description>{description}</Description>
           </div>
           {/*<FlowerWrapper>*/}
@@ -47,7 +53,7 @@ const _ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, o
             entry.tags ? (entry.tags.length > 0)
               ? <TagsWrapper>
                 <ul >
-                  { entry.tags.slice(0, 5).map(tag => <Tag key={"Tag"+tag} clickable={ true } text = {tag} t={t} /> ) }
+                  { entry.tags.slice(0, 5).map(tag => <Tag key={"Tag"+tag} clickable={ true } onClick={(e) => onTagClick(e)} text = {tag} t={t} /> ) }
                 </ul>
               </TagsWrapper>
               : null
@@ -68,6 +74,7 @@ class ResultList extends Component {
 
     let results = entries.map( e => 
       <ResultListElement
+        dispatch     = { dispatch }
         entry        = { e            }
         ratings      = { (e.ratings || []).map(id => ratings[id])}
         key          = { e.id         }
