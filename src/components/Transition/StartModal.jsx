@@ -1,10 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 import { writeToLocalStorage } from '../../util/localStorage';
-import STYLE from "../styling/Variables"
-import { pure } from "recompose";
 import Actions from "../../Actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome/index"
 import Tag from "../Tags/Tag"
 
 const StartModal = (props) => {
@@ -42,7 +39,6 @@ const StartModal = (props) => {
           <Button type="button" className="btn-close" onClick={() => onModalClose()}>X</Button>
         </Header>
         <Body>
-          <H3>Wähle direkt einen Suchbegriff:</H3>
           <TagList>
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
@@ -59,17 +55,16 @@ const StartModal = (props) => {
                  onClick={(e) => onTagClick(e)}
                  text="unverpackt" t={t}/>
           </TagList>
-          <H3> …oder erkunde die Karte:</H3>
           <Button type="button" className="btn-explore" onClick={() => onModalClose()}>Karte erkunden</Button>
         </Body>
         <Footer>
-          <CheckBoxLabel>
-            <CheckBox
-              name="isGoing"
-              type="checkbox"
-              onChange={(e) => onHideModalInFutureClick(e)} />
-            zukünftig nicht mehr zeigen
-          </CheckBoxLabel>
+          {/*<CheckBoxLabel>*/}
+          {/*  <CheckBox*/}
+          {/*    name="isGoing"*/}
+          {/*    type="checkbox"*/}
+          {/*    onChange={(e) => onHideModalInFutureClick(e)} />*/}
+          {/*  zukünftig nicht mehr zeigen*/}
+          {/*</CheckBoxLabel>*/}
           <LinkList>
             <Link href="https://transition-muc.de" target="_blank">Transition München</Link> |
             <Link href="https://munich.impacthub.net/impressum/" target="_blank">Impressum</Link> |
@@ -86,7 +81,8 @@ export default StartModal;
 const ModalHolder = styled.div`
   z-index: 10001;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   position: fixed;
   display: flex;
   align-content: center;
@@ -166,7 +162,10 @@ const H3 = styled.h3`
 `;
 
 const Body = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 0 15px 45px;
+  align-items: center;
 `;
 
 const Footer = styled.div`
@@ -190,6 +189,10 @@ const TagList = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin: 20px 0;
+  @media (min-height: 600px) {
+    margin: 40px 0 50px;
+  }
   a {
     width: calc(50% - 35px);
     padding: 8px 14px;

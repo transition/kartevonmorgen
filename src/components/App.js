@@ -105,10 +105,10 @@ class Main extends Component {
     const mapCenter = map.center;
     const loggedIn = user.username ? true : false;
 
-    // User marked start modal to be hidden
-    if (readFromLocalStorage('hideStartModal')) {
-      showStartModal = false;
-    }
+    // // User marked start modal to be hidden
+    // if (readFromLocalStorage('hideStartModal')) {
+    //   showStartModal = false;
+    // }
 
     return (
       <ThemeProvider theme={STYLE}>
