@@ -186,9 +186,6 @@ const EntryDetailsOtherData = styled.div`
     }
     .address {
       margin-bottom: 10px;
-      div {
-        color: ${STYLE.transitionOrange};
-      }
     }
   }
 `;
