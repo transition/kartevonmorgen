@@ -68,7 +68,7 @@ class Sidebar extends Component {
       case V.START:
       case V.RESULT:
         content = (
-          <ResultWrapper className="result">
+          <ResultWrapper className={'result ' + (userRole !== 'editor' ? 'touch-scroll' : '')}>
             <ResultList
               userRole={userRole}
               waiting={ waiting_for_search_results }
@@ -108,6 +108,7 @@ class Sidebar extends Component {
                     { t("search-results.results-out-of-bbox") }
                   </GroupHeader>
                   <ResultList
+                    className={userRole !== 'editor' ? 'touch-scroll' : ''}
                     userRole={userRole}
                     entries={ invisibleEntries }
                     ratings={ ratings }
@@ -334,10 +335,12 @@ const GroupHeader = styled.div `
 
 const ResultWrapper = styled.div `
   padding-bottom: 1.5em;
-  height: calc(100vh - 54px);
+  height: inherit;
   overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
   background: #f7f7f7;
+  &.touch-scroll {
+    -webkit-overflow-scrolling: touch;
+  }
 
    /* city list only for sidebar, not landing page TODO: where to put this? */
   .city-list ul {

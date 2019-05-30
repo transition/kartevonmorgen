@@ -226,7 +226,7 @@ class Main extends Component {
                 />
               </div>
 
-              <div className="content-wrapper">
+              <div className={'content-wrapper ' + ((view.left === V.ENTRY || view.left === V.EDIT || view.left === V.EDIT) ? 'full' : 'with-search')}>
                 <Sidebar
                   view={ view }
                   search={ search }
@@ -366,13 +366,21 @@ const LeftPanel = styled.div `
   position: relative;
   z-index: 2;
   order: -1;
-  height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+  height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
   overflow-y: hidden;
   float: left;
   background-color: #fff;
   box-shadow: 1px 1px 5px rgba(0,0,0,.5);
   .content-wrapper {
+    &.with-search {
+      height: calc(100vh - 54px);
+      height: calc(var(--vh, 1vh) * 100 - 54px);
+    }
+    &.full {
+      height: 100vh;
+      height: calc(var(--vh, 1vh) * 100);
+    }
     .result {
       box-sizing: border-box;
       padding-bottom: 30px;
@@ -388,10 +396,9 @@ const LeftPanel = styled.div `
     .content {
       overflow-y: scroll;
       overflow: auto;
-      height: 100vh;
+      height: inherit;
       width: 100%;
       box-sizing: border-box;
-      padding-bottom: 1rem;
       position: absolute;
       display: flex;
       flex-direction: column;
