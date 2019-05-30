@@ -150,7 +150,7 @@ const LoadingEntryMessage = styled.div`
 `;
 
 const EntryLink = styled.a`
-  color: ${STYLE.darkGray};
+  color: ${STYLE.transitionOrange};
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -178,6 +178,19 @@ const EntryDescription = styled.p`
 
 const EntryDetailsOtherData = styled.div`
   font-family: ${STYLE.headerFont};
+  margin-top: 30px;
+  > div {
+    margin-bottom: 10px;
+    ul {
+      margin-top: 30px;
+    }
+    .address {
+      margin-bottom: 10px;
+      div {
+        color: ${STYLE.transitionOrange};
+      }
+    }
+  }
 `;
 
 const TransitionTeaser = styled.div`
