@@ -61,10 +61,17 @@ class Main extends Component {
     document.addEventListener("keydown", (e) => this.escFunction(e), false)
     if(this.props.view.left === V.RESULT) this.props.dispatch(Actions.showStart())
     this.props.dispatch(Actions.getAllTags())
+
+    // Add vh unit as custom css property
+    // https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser#42965111
+    this.updateStyle();
+    // We listen to the resize event
+    window.addEventListener('resize', this.updateStyle);
   }
 
   componentWillUnmount(){
     document.removeEventListener("keydown");
+    window.removeEventListener('resize', this.updateStyle);
   }
 
   swipedLeftOnPanel() {
@@ -74,6 +81,13 @@ class Main extends Component {
   swipedRightOnMap(e, deltaX) {
     if( e.nativeEvent === undefined || e.nativeEvent.changedTouches === undefined) return true
     if(e.nativeEvent.changedTouches[0].pageX + deltaX < 26 ) this.props.dispatch(Actions.showLeftPanel())
+  }
+
+  updateStyle() {
+    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+    let vh = window.innerHeight * 0.01;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
   }
 
   render(){
@@ -352,7 +366,8 @@ const LeftPanel = styled.div `
   position: relative;
   z-index: 2;
   order: -1;
-  height: 100vh;
+  height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
   overflow-y: hidden;
   float: left;
   background-color: #fff;
