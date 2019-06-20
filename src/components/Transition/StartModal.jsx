@@ -42,18 +42,31 @@ const StartModal = (props) => {
           <TagList>
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="secondhandladen" t={t} />
+                 text="klamottenkaufen" t={t} />
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="klamottenladen"
+                 text="frühstückengehen"
                  t={t}/>
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="lastenradverleih"
+                 text="mittagessengehen"
                  t={t}/>
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="unverpackt" t={t}/>
+                 text="abendessengehen"
+                 t={t}/>
+            <Tag clickable={true}
+                 onClick={(e) => onTagClick(e)}
+                 text="inscafegehen" t={t}/>
+            <Tag clickable={true}
+                 onClick={(e) => onTagClick(e)}
+                 text="eisessengehen" t={t}/>
+            <Tag clickable={true}
+                 onClick={(e) => onTagClick(e)}
+                 text="lebensmittelbesorgen" t={t}/>
+            <Tag clickable={true}
+                 onClick={(e) => onTagClick(e)}
+                 text="lastenradverleih" t={t}/>
           </TagList>
           <Button type="button" className="btn-explore" onClick={() => onModalClose()}>Karte erkunden</Button>
         </Body>
@@ -117,7 +130,7 @@ const Modal = styled.div`
   flex-direction: column;
   @media (min-width: 576px) {
     border-radius: 10px;
-    max-width: 380px;
+    max-width: 400px;
     align-self: center;
   }
 `;
@@ -194,12 +207,25 @@ const TagList = styled.div`
     margin: 40px 0 50px;
   }
   a {
-    width: calc(50% - 35px);
-    padding: 8px 14px;
+    width: calc(50% - 10px);
+    padding: 8px 3px;
     margin: 5px 0;
     font-size: 12px;
     text-align: center;
     font-weight: 600;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    @media (min-width: 560px) {
+      width: calc(50% - 22px);
+      word-break: normal;
+      padding: 8px 8px;
+    }
     span {
       color: ${({ theme }) => theme.transitionOrange};  
     }
