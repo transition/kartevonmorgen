@@ -11,7 +11,7 @@ import Tag from "./Tag"
 
 
 const TagOption = (props) => {
-  
+
   const isTag=props.data.type === "tag"
   const isPlace=props.data.type === "place"
 
@@ -21,9 +21,9 @@ const TagOption = (props) => {
 
   return (
     <_TagOption {...props.innerProps} isTag={isTag} isFocused={props.isFocused} >
-      
+
       { !isTag ? <FontAwesomeIcon icon={icon} /> : null }
-      
+
       { isTag
         ? <Tag clickable={true} text={props.data.value} t={props.selectProps.t} />
         : <a>{props.data.label}</a>
@@ -112,8 +112,8 @@ class TagAutocomplete extends Component {
         return d.label.match( searchString );
       });
     }
-    
-    res = res.slice(0, 5)
+
+    res = res.slice(0, 8)
 
     let output = []
 
@@ -131,14 +131,14 @@ class TagAutocomplete extends Component {
       //   type: "place"
       // })
     }
-    
+
     output.push(
       {
         label: this.props.t("searchbar.suggestions"),
         value: "taggroup",
         options: res
       })
-    
+
     this.setState({
       options: output,
       inputValue: input
@@ -166,7 +166,7 @@ class TagAutocomplete extends Component {
     values = values.slice(-1);
     if(values.length < 1) return this.props.onChange('')
     return this.props.onChange( (values[0].type==="tag" ? "#" : "") + values[0].value )
-    
+
     // let string = ''
     // for (let i = 0; i < values.length; i++) {
     //   string += (values[i].type==="tag" ? "#" : "") + values[i].value + ",";
@@ -191,24 +191,24 @@ class TagAutocomplete extends Component {
         isSearchable={this.props.userRole && this.props.userRole === 'editor'}
         isClearable={true}
         isMulti={true}
-        
+
         maxMenuHeight={700}
 
         classNamePrefix="search-input"
         options={ this.state.options }
-          
+
         //placeholder={this.props.t("searchbar.placeholder")}
         placeholder="Wähle einen Hashtag..."
         // noOptionsMessage={() => this.props.t("searchbar.noSuggestions") }
         // formatCreateLabel={(inputValue) => 'Nach "' + inputValue +'" suchen…' }
         // createOptionPosition="first"
-        getOptionLabel={ (obj) => obj.__isNew__ ? obj.label : "#"+obj.label } 
+        getOptionLabel={ (obj) => obj.__isNew__ ? obj.label : "#"+obj.label }
 
         onInputChange={this.onInputChange.bind(this)}
         filterOption={ () => true}
         onChange={ (values,event) => this._onChange(values,event) }
         onBlur={event => event.preventDefault()}
-        
+
         delimiter = ","
         value={ this.valueToArray() }
 
