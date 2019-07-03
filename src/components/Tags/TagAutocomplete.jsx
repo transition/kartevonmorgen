@@ -45,31 +45,43 @@ const MultiTagContainer = (props) => {
 };
 
 const defaultTags = [{
-  "value": "klamottenladen",
-  "label": "klamottenladen",
+  "value": "klamottenkaufen",
+  "label": "klamottenkaufen",
   "type": "tag"
 },{
-  "value": "secondhandladen",
-  "label": "secondhandladen",
+  "value": "frühstückengehen",
+  "label": "frühstückengehen",
+  "type": "tag"
+},{
+  "value": "mittagessengehen",
+  "label": "mittagessengehen",
+  "type": "tag"
+},{
+  "value": "abendessengehen",
+  "label": "abendessengehen",
+  "type": "tag"
+},{
+  "value": "inscafegehen",
+  "label": "inscafegehen",
+  "type": "tag"
+},{
+  "value": "eisessengehen",
+  "label": "eisessengehen",
+  "type": "tag"
+},{
+  "value": "lebensmittelbesorgen",
+  "label": "lebensmittelbesorgen",
   "type": "tag"
 },{
   "value": "lastenradverleih",
   "label": "lastenradverleih",
-  "type": "tag"
-},{
-  "value": "unverpackt",
-  "label": "unverpackt",
-  "type": "tag"
-},{
-  "value": "stadtrundgang",
-  "label": "stadtrundgang",
   "type": "tag"
 }
 ]
 
 
 class TagAutocomplete extends Component {
-  
+
   constructor(props) {
     super(props);
 
@@ -81,7 +93,7 @@ class TagAutocomplete extends Component {
       }],
       inputValue: ''
     }
-  
+
   }
 
   onInputChange(input) {

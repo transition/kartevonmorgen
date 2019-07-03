@@ -20,33 +20,44 @@ const TagOption = (props) => {
 };
 
 const defaultTags = [{
-  "value": "restaurants",
-  "label": "restaurants",
+  "value": "klamottenkaufen",
+  "label": "klamottenkaufen",
   "type": "tag"
 },{
-  "value": "klamotten",
-  "label": "klamotten",
+  "value": "frühstückengehen",
+  "label": "frühstückengehen",
   "type": "tag"
 },{
-  "value": "stadtrundgang",
-  "label": "stadtrundgang",
+  "value": "mittagessengehen",
+  "label": "mittagessengehen",
   "type": "tag"
 },{
-  "value": "umwelt",
-  "label": "umwelt",
+  "value": "abendessengehen",
+  "label": "abendessengehen",
   "type": "tag"
 },{
-  "value": "lastenrad",
-  "label": "lastenrad",
+  "value": "inscafegehen",
+  "label": "inscafegehen",
+  "type": "tag"
+},{
+  "value": "eisessengehen",
+  "label": "eisessengehen",
+  "type": "tag"
+},{
+  "value": "lebensmittelbesorgen",
+  "label": "lebensmittelbesorgen",
+  "type": "tag"
+},{
+  "value": "lastenradverleih",
+  "label": "lastenradverleih",
   "type": "tag"
 }
-
 ]
 
 
 
 class SearchInput extends Component {
-  
+
   constructor(props) {
     super(props);
 
@@ -55,9 +66,9 @@ class SearchInput extends Component {
       options: [],
       inputValue: ''
     };
-    
+
     //TODO: List of Tags should probably be loaded with the WebAPI or use Async react-select
-    
+
     request
       .get( OFDB_API.link +'/tags/')
       .accept('json')
@@ -73,7 +84,7 @@ class SearchInput extends Component {
               "label": response.body[i],
               "type": "tag"
             }
-          } 
+          }
           this.setState({
             allOptions: options
           })
@@ -97,7 +108,7 @@ class SearchInput extends Component {
         return d.label.match( searchString );
       });
     }
-    
+
     res = res.slice(0, 5)
 
     let output = [
@@ -120,7 +131,7 @@ class SearchInput extends Component {
         }]
       })
     }
-    
+
     this.setState({
       options: output,
       inputValue: input
@@ -152,7 +163,7 @@ class SearchInput extends Component {
   }
 
   // valueToString(newValue,event) {
-    
+
   //   switch(newValue.type){
   //     case "tag":
 
@@ -175,7 +186,7 @@ class SearchInput extends Component {
   //   for (let i = 0; i < val.length; i++) {
   //     const normalized = normalize.tags(val[i].value)
   //     if ( normalized==false ) continue
-      
+
   //     const isNew = (i == (val.length -1) && event.action == "create-option")
   //     if (isNew ) if (currentTagsArray.indexOf(normalized) != -1 ) return false
 
@@ -199,23 +210,23 @@ class SearchInput extends Component {
 
         isClearable={false}
         isMulti={true}
-        
+
         maxMenuHeight={800}
 
         classNamePrefix="search-input"
         options={ this.state.options }
-          
+
         placeholder={this.props.t("entryForm.tags")}
         noOptionsMessage={() => this.props.t("entryForm.noTagSuggestion") }
         formatCreateLabel={(inputValue) => 'Nach "' + inputValue +'" suchen…' }
         createOptionPosition="first"
-        getOptionLabel={ (obj) => obj.__isNew__ ? obj.label : "#"+obj.label } 
+        getOptionLabel={ (obj) => obj.__isNew__ ? obj.label : "#"+obj.label }
 
         onInputChange={this.onInputChange.bind(this)}
         filterOption={ () => true}
         onChange={ (values,event) => this._onChange(values,event) }
         onBlur={event => event.preventDefault()}
-        
+
         value={ this.valueToArray() }
       />
     )
