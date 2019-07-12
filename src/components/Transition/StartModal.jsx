@@ -75,9 +75,9 @@ const StartModal = (props) => {
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
                  text="Urban Gardening" t={t} hash={false} />
-            <Tag clickable={true}
-                 onClick={(e) => onTagClick(e)}
-                 text="Mehrwert Partner" t={t} hash={false} />
+            {/*<Tag clickable={true}*/}
+            {/*     onClick={(e) => onTagClick(e)}*/}
+            {/*     text="Mehrwert Partner" t={t} hash={false} />*/}
           </TagList>
           <Button type="button" className="btn-explore" onClick={() => onModalClose()}>Karte erkunden</Button>
         </Body>
