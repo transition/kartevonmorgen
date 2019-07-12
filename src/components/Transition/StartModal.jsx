@@ -20,9 +20,11 @@ const StartModal = (props) => {
 
   function onTagClick(e) {
     e.preventDefault();
+    let text = e.target.innerText || e.target.textContent;
+    text = text.replace(' ', '').toLowerCase();
     onModalClose();
     dispatch(Actions.showSearchResults());
-    dispatch(Actions.setSearchText(e.target.innerText || e.target.textContent));
+    dispatch(Actions.setSearchText(text));
     return dispatch(Actions.search());
   }
 
@@ -42,31 +44,40 @@ const StartModal = (props) => {
           <TagList>
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="klamottenkaufen" t={t} />
+                 text="Klamotten kaufen" t={t} hash={false} />
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="frühstückengehen"
-                 t={t}/>
+                 text="Frühstücken gehen"
+                 t={t} hash={false} />
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="mittagessengehen"
-                 t={t}/>
+                 text="Mittagessen gehen"
+                 t={t} hash={false} />
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="abendessengehen"
-                 t={t}/>
+                 text="Abendessen gehen"
+                 t={t} hash={false} />
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="inscafegehen" t={t}/>
+                 text="Ins Cafe gehen" t={t} hash={false} />
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="eisessengehen" t={t}/>
+                 text="Eis essen gehen" t={t} hash={false} />
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="lebensmittelbesorgen" t={t}/>
+                 text="Lebensmittel besorgen" t={t} hash={false} />
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
-                 text="lastenradverleih" t={t}/>
+                 text="Lastenradverleih" t={t} hash={false} />
+            <Tag clickable={true}
+                 onClick={(e) => onTagClick(e)}
+                 text="Dinge reparieren" t={t} hash={false} />
+            <Tag clickable={true}
+                 onClick={(e) => onTagClick(e)}
+                 text="Urban Gardening" t={t} hash={false} />
+            <Tag clickable={true}
+                 onClick={(e) => onTagClick(e)}
+                 text="Mehrwert Partner" t={t} hash={false} />
           </TagList>
           <Button type="button" className="btn-explore" onClick={() => onModalClose()}>Karte erkunden</Button>
         </Body>

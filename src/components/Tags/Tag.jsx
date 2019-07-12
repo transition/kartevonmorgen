@@ -3,9 +3,9 @@ import STYLE from "../styling/Variables";
 import T from "prop-types";
 
 const Tag = props => {
-  const {onClick, text, clickable, quotes, t} = props;
+  const {onClick, text, clickable, quotes, hash, t} = props;
   const className = text === t('transition.partnerTag') ? 'tag highlight' : 'tag';
-
+  const setHash = hash === false ? false : true;
   return (
     <TagLink
       clickable={clickable}
@@ -13,7 +13,7 @@ const Tag = props => {
       className={className}>
       {quotes
         ? <span>"{text}"</span>
-        : <span>#{text}</span>
+        : <span>{setHash ? `#${text}` : text}</span>
       }
     </TagLink>
   )
@@ -24,6 +24,7 @@ Tag.propTypes = {
   text: T.string,
   clickable: T.bool,
   quotes: T.bool,
+  hash: T.bool,
   t: T.func.isRequired,
 }
 

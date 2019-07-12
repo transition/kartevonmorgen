@@ -40,7 +40,7 @@ const MultiTagContainer = (props) => {
   return (
     isTag
       ? <Tag {...props} clickable={false} text={props.data.value} t={props.selectProps.t} />
-      : <Tag {...props} clickable={false} text={props.data.value} t={props.selectProps.t} quotes={true}/>
+      : <Tag {...props} clickable={false} text={props.data.value} t={props.selectProps.t} quotes={false}/>
   );
 };
 
