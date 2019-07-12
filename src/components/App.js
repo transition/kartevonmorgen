@@ -109,6 +109,10 @@ class Main extends Component {
     // if (readFromLocalStorage('hideStartModal')) {
     //   showStartModal = false;
     // }
+    // Hide start modal if search text was set
+    if (search && search.text && search.text !== '') {
+      showStartModal = false;
+    }
 
     return (
       <ThemeProvider theme={STYLE}>
