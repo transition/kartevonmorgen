@@ -76,6 +76,14 @@ const defaultTags = [{
   "value": "lastenradverleih",
   "label": "lastenradverleih",
   "type": "tag"
+},{
+  "value": "dingereparieren",
+  "label": "dingereparieren",
+  "type": "tag"
+},{
+  "value": "urbangardening",
+  "label": "urbangardening",
+  "type": "tag"
 }
 ]
 
