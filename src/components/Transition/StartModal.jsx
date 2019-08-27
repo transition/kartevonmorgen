@@ -21,7 +21,7 @@ const StartModal = (props) => {
   function onTagClick(e) {
     e.preventDefault();
     let text = e.target.innerText || e.target.textContent;
-    text = text.replace(' ', '').toLowerCase();
+    text = text.replace(/\s/g,'').toLowerCase();
     onModalClose();
     dispatch(Actions.showSearchResults());
     dispatch(Actions.setSearchText(text));
