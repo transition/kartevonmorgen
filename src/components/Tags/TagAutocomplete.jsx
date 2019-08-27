@@ -84,6 +84,10 @@ const defaultTags = [{
   "value": "urbangardening",
   "label": "urbangardening",
   "type": "tag"
+},{
+  "value": "freizeitgestalten",
+  "label": "freizeitgestalten",
+  "type": "tag"
 }
 ]
 

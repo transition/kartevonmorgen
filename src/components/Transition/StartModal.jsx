@@ -75,6 +75,9 @@ const StartModal = (props) => {
             <Tag clickable={true}
                  onClick={(e) => onTagClick(e)}
                  text="Urban Gardening" t={t} hash={false} />
+            <Tag clickable={true}
+                 onClick={(e) => onTagClick(e)}
+                 text="Freizeit gestalten" t={t} hash={false} />
             {/*<Tag clickable={true}*/}
             {/*     onClick={(e) => onTagClick(e)}*/}
             {/*     text="Mehrwert Partner" t={t} hash={false} />*/}
